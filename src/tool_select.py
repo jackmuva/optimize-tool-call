@@ -55,6 +55,7 @@ def getTools():
 
     for integration, functions in allActions['actions'].items():
         for function in functions:
-            toolbox.append(function)
+            if function['function']['name'] in selectedActionNames:
+                toolbox.append(function)
 
     return toolbox
