@@ -56,7 +56,6 @@ class BasicToolNode:
                 "action": tool_call["name"],
                 "parameters": tool_call["args"]
             }
-            print(run_actions_body)
             response = requests.post("https://actionkit.useparagon.com/projects/" + os.environ['PARAGON_PROJECT_ID'] + "/actions",
                              headers={"Authorization": "Bearer " + encoded_jwt}, json=run_actions_body)
             tool_result = response.json()
