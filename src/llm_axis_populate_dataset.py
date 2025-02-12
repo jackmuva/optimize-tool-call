@@ -69,25 +69,48 @@ def runPrompt(test_dict, llm_graph, prefix):
     test_dict['tool_outputs'] = {}
     test_dict['error'] = {}
 
-    for i in range(0, len(test_dict['prompt'].keys())):
-        user_input = test_dict['prompt'][i]
+    i = 0
+    failures = {}
+    while i < len(test_dict['prompt'].keys()):
+        cached = False 
         try:
-            print("User: " + user_input)
-            if prefix == 'claude':
-                events = stream_claude_graph_updates(llm_graph, user_input)
-            else:
-                events = stream_gpt_graph_updates(llm_graph, user_input)
-            test_dict['outputs'][i] = events['messages']
-            test_dict['tools'][i] = events['calls']
-            test_dict['tool_outputs'][i] = events['responses']
-            test_dict['error'][i] = '' 
+            with open(f"./data/{prefix}-llm-cache.json", 'r') as file:
+                results_dict = json.load(file)
+            if i in results_dict['outputs'] and results_dict['error'][i] == '':
+                i += 1
+                for col in test_dict:
+                    test_dict[col][i] = results_dict[col][i]
+                cached = True 
         except Exception as e:
-            test_dict['outputs'][i] = ["ERROR"]
-            test_dict['tools'][i] = ["ERROR"]
-            test_dict['tool_outputs'][i] = ["ERROR"]
-            test_dict['error'][i] = str(e)
-            print("error: " + str(e))
-        time.sleep(20)
+            print(e)
+
+        if not cached:
+            user_input = test_dict['prompt'][i]
+            try:
+                print(f"{i} User: " + user_input)
+                if prefix == 'claude':
+                    events = stream_claude_graph_updates(llm_graph, user_input)
+                else:
+                    events = stream_gpt_graph_updates(llm_graph, user_input)
+                test_dict['outputs'][i] = events['messages']
+                test_dict['tools'][i] = events['calls']
+                test_dict['tool_outputs'][i] = events['responses']
+                test_dict['error'][i] = '' 
+                i += 1
+            except Exception as e:
+                if i not in failures:
+                    print(f"retrying {i}")
+                    time.sleep(60)
+                    failures[i] = True 
+                else:
+                    print("error: " + str(e))
+                    test_dict['outputs'][i] = ["ERROR"]
+                    test_dict['tools'][i] = ["ERROR"]
+                    test_dict['tool_outputs'][i] = ["ERROR"]
+                    test_dict['error'][i] = str(e)
+                    i += 1
+        with open(f"./data/{prefix}-llm-cache.json", "w") as outfile: 
+            json.dump(test_dict, outfile)
 
     try: 
         df_dict = {}
