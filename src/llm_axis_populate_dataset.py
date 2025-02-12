@@ -28,21 +28,39 @@ def createGraph(llm, tools):
     return graph
 
 
-def stream_graph_updates(graph, user_input: str):
+def stream_gpt_graph_updates(graph, user_input: str):
     calls = []
     messages = []
     responses = []
+    inputs = []
     for event in graph.stream({"messages": [{"role": "user", "content": user_input}]}):
         for value in event.values():
             if value['messages'][-1].additional_kwargs and 'tool_calls' in value['messages'][-1].additional_kwargs:
-                calls.append(value['messages'][-1].additional_kwargs['tool_calls'])
+                calls.append(value['messages'][-1].additional_kwargs['tool_calls'][0]['function']['name'])
+                inputs.append(value['messages'][-1].additional_kwargs['tool_calls'][0]['function']['arguments'])
             elif str(type(value['messages'][-1])) == "<class 'langchain_core.messages.tool.ToolMessage'>":
                 responses.append(value['messages'][-1].content)
             else:
                 messages.append(value['messages'][-1].content)
 
-    return {"messages": messages, "calls": calls, "responses": responses}
+    return {"messages": messages, "calls": calls, "responses": responses, "inputs": inputs}
 
+def stream_claude_graph_updates(graph, user_input: str):
+    calls = []
+    messages = []
+    responses = []
+    inputs = []
+    for event in graph.stream({"messages": [{"role": "user", "content": user_input}]}):
+        for value in event.values():
+            if str(type(value['messages'][-1])) == "<class 'langchain_core.messages.tool.ToolMessage'>":
+                responses.append(value['messages'][-1].content)
+                calls.append(value['messages'][-1].name)
+            elif value['messages'][-1].tool_calls and value['messages'][-1].tool_calls[0]['args']:
+                inputs.append(value['messages'][-1].tool_calls[0]['args'])
+            else:
+                messages.append(value['messages'][-1].content)
+
+    return {"messages": messages, "calls": calls, "responses": responses, "inputs": inputs}
 
 def runPrompt(test_dict, llm_graph, prefix):
     test_dict['outputs'] = {}
@@ -53,15 +71,19 @@ def runPrompt(test_dict, llm_graph, prefix):
         user_input = test_dict['prompt'][i]
         try:
             print("User: " + user_input)
-            events = stream_graph_updates(llm_graph, user_input)
+            if prefix == 'claude':
+                events = stream_claude_graph_updates(llm_graph, user_input)
+            else:
+                events = stream_gpt_graph_updates(llm_graph, user_input)
+            print(events)
             test_dict['outputs'][i] = events['messages']
             test_dict['tools'][i] = events['calls']
             test_dict['tool_outputs'][i] = events['responses']
-        except:
+        except Exception as e:
             test_dict['outputs'][i] = ["ERROR"]
             test_dict['tools'][i] = ["ERROR"]
             test_dict['tool_outputs'][i] = ["ERROR"]
-            print("error: " + user_input)
+            print("error: " + str(e))
 
     try: 
         df_dict = {}
