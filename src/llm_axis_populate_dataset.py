@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 import pandas as pd
 from langgraph.graph import StateGraph, START, END
 from langchain_openai import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
 from tool_select import *
 from node_utils import *
 
@@ -9,25 +10,25 @@ load_dotenv()
 
 test_df = pd.read_csv("./data/tool-based-test-cases.csv")
 test_dict = test_df.to_dict()
-
-graph_builder = StateGraph(State)
-
-llm = ChatOpenAI(model="gpt-4o")
 tools = getTools()
-agent = llm.bind_tools(tools)
-def chatbot(state: State):
-    return {"messages": [agent.invoke(state["messages"])]}
-tool_node = BasicToolNode(tools = tools)
-
-graph_builder.add_node("tools", tool_node)
-graph_builder.add_node("chatbot", chatbot)
-graph_builder.add_conditional_edges("chatbot", route_tools, {"tools": "tools", END: END})
-graph_builder.add_edge("tools", "chatbot")
-graph_builder.add_edge(START, "chatbot")
-graph = graph_builder.compile()
 
 
-def stream_graph_updates(user_input: str):
+def createGraph(llm, tools):
+    agent = llm.bind_tools(tools)
+    def chatbot(state: State):
+        return {"messages": [agent.invoke(state["messages"])]}
+    tool_node = BasicToolNode(tools = tools)
+    graph_builder = StateGraph(State)
+    graph_builder.add_node("tools", tool_node)
+    graph_builder.add_node("chatbot", chatbot)
+    graph_builder.add_conditional_edges("chatbot", route_tools, {"tools": "tools", END: END})
+    graph_builder.add_edge("tools", "chatbot")
+    graph_builder.add_edge(START, "chatbot")
+    graph = graph_builder.compile()
+    return graph
+
+
+def stream_graph_updates(graph, user_input: str):
     calls = []
     messages = []
     responses = []
@@ -42,23 +43,42 @@ def stream_graph_updates(user_input: str):
 
     return {"messages": messages, "calls": calls, "responses": responses}
 
-test_dict['outputs'] = {}
-test_dict['tools'] = {}
-test_dict['tool_outputs'] = {}
 
-for i in range(0, len(test_dict['prompt'].keys())):
-    user_input = test_dict['prompt'][i]
-    try:
-        print("User: " + user_input)
-        events = stream_graph_updates(user_input)
-        test_dict['outputs'][i] = events['messages']
-        test_dict['tools'][i] = events['calls']
-        test_dict['tool_outputs'][i] = events['responses']
+def runPrompt(test_dict, llm_graph, prefix):
+    test_dict['outputs'] = {}
+    test_dict['tools'] = {}
+    test_dict['tool_outputs'] = {}
+
+    for i in range(0, len(test_dict['prompt'].keys())):
+        user_input = test_dict['prompt'][i]
+        try:
+            print("User: " + user_input)
+            events = stream_graph_updates(llm_graph, user_input)
+            test_dict['outputs'][i] = events['messages']
+            test_dict['tools'][i] = events['calls']
+            test_dict['tool_outputs'][i] = events['responses']
+        except:
+            test_dict['outputs'][i] = ["ERROR"]
+            test_dict['tools'][i] = ["ERROR"]
+            test_dict['tool_outputs'][i] = ["ERROR"]
+            print("error: " + user_input)
+
+    try: 
+        df_dict = {}
+        for i in test_dict:
+            df_dict[i] = list(test_dict[i].values())
+        populated_df = pd.DataFrame.from_dict(df_dict)
+        populated_df.to_csv(f'./data/{prefix}-llm-axis-dataset.csv')
+        print(f'Sucessfully created {prefix} dataset')
     except:
-        print("error: " + user_input)
+        print(f'Error creating {prefix} dataset')
+        with open(f"./data/{prefix}-llm-cache.json", "w") as outfile: 
+            json.dump(test_dict, outfile)
 
-df_dict = {}
-for i in test_dict:
-    df_dict[i] = list(test_dict[i].values())
-populated_df = pd.DataFrame.from_dict(df_dict)
-populated_df.to_csv('./data/llm-axis-dataset.csv')
+gpt_llm = ChatOpenAI(model="gpt-4o")
+gpt_graph = createGraph(gpt_llm, tools)
+runPrompt(test_dict, gpt_graph, "gpt")
+
+claude_llm = ChatAnthropic(model_name="claude-3-5-sonnet-20240620", timeout=None, stop=None)
+claude_graph = createGraph(claude_llm, tools)
+runPrompt(test_dict, claude_graph, "claude")
