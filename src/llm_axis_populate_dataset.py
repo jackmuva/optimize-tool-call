@@ -5,6 +5,7 @@ from langchain_openai import ChatOpenAI
 from langchain_anthropic import ChatAnthropic
 from tool_select import *
 from node_utils import *
+import time
 
 load_dotenv()
 
@@ -66,6 +67,7 @@ def runPrompt(test_dict, llm_graph, prefix):
     test_dict['outputs'] = {}
     test_dict['tools'] = {}
     test_dict['tool_outputs'] = {}
+    test_dict['error'] = {}
 
     for i in range(0, len(test_dict['prompt'].keys())):
         user_input = test_dict['prompt'][i]
@@ -75,15 +77,17 @@ def runPrompt(test_dict, llm_graph, prefix):
                 events = stream_claude_graph_updates(llm_graph, user_input)
             else:
                 events = stream_gpt_graph_updates(llm_graph, user_input)
-            print(events)
             test_dict['outputs'][i] = events['messages']
             test_dict['tools'][i] = events['calls']
             test_dict['tool_outputs'][i] = events['responses']
+            test_dict['error'][i] = '' 
         except Exception as e:
             test_dict['outputs'][i] = ["ERROR"]
             test_dict['tools'][i] = ["ERROR"]
             test_dict['tool_outputs'][i] = ["ERROR"]
+            test_dict['error'][i] = str(e)
             print("error: " + str(e))
+        time.sleep(20)
 
     try: 
         df_dict = {}
