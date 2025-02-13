@@ -110,7 +110,7 @@ def evaluateTestCases(prefix):
             expected_tools=formatExpectedToolCalls(index, output_dict)
         ) 
         test_cases.append(test_case)
-    return
+
     tool_correctness= ToolCorrectnessMetric(evaluation_params = [ToolCallParams.TOOL])
     task_completion = TaskCompletionMetric(model="gpt-4o-mini")
 
