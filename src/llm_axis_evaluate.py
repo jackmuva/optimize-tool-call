@@ -20,9 +20,13 @@ def completeJsonFormat(parseList:list, prefix: str) -> list:
     elif prefix == 'claude':
         for s in parseList:
             new = re.sub(r' = \"(.*?)\"', r" = '\1'", s).replace('"{', '{').replace('}"', '}').replace('\\"', "'").replace('"["', '"[\'').replace('"]"', '\']"')\
-                    .replace('True', '"True"').replace('False', '"False"').replace('="text/csv"', "='text/csv'").replace('\\', '')
+                    .replace('True', '"True"').replace('False', '"False"').replace('="text/csv"', "='text/csv'").replace('\\', '')\
+                    .replace('I"m', "I'm").replace('I"d', "I'd").replace('you"d', "you'd")
+                    #.replace('null', '"null"').replace('{"content": "}, "link"', '{"content": ""}, "link"')\
+                    #.replace(' false,', '"false",').replace(' true,', '"true",').replace('"annotations":', '{"annotations":')
             new = re.sub(r' LIKE \"(.*?)\"', r" = '\1'", new)
-            if s == 'ERROR':
+            new = re.sub(r' CONTAINS \"(.*?)\"', r" = '\1'", new)
+            if s == 'ERROR' or s == '"ERROR"':
                 res.append('{"error": "request too large"}')
             elif len(new) > 0 and new[0] == '[' and new[-1] == ']':
                 new = '{"results":' + new + "}"
@@ -69,19 +73,17 @@ def formatToolCalls(index: int, output_dict: dict, prefix: str) -> list:
             for action in actions:
                 if action['function']['name'] == toolName:
                     description = action['function']['description']
+        if i >= len(parsedToolInputs):
+            parsedToolInputs.append("{}")
+        if i >= len(parsedToolOutputs):
+            parsedToolOutputs.append("{}")
         try:
             json.loads(parsedToolInputs[i])
         except:
             print(index)
-            print(parsedToolInputs[i])
-        try:
-            json.loads(parsedToolOutputs[i])
-        except:
-            print(index)
-            with open("Error.txt", "w") as text_file:
-                text_file.write(parsedToolOutputs[i])
+            print(parsedToolInputs)
 
-        toolCall = ToolCall(name=toolName, description=description, input_parameters=json.loads(parsedToolInputs[i]), output=str(json.loads(parsedToolOutputs[i])))
+        toolCall = ToolCall(name=toolName, description=description, input_parameters=json.loads(parsedToolInputs[i]), output=str(parsedToolOutputs[i]))
         res.append(toolCall)
     return res
 
