@@ -4,20 +4,38 @@ from deepeval.test_case import LLMTestCase, ToolCall, ToolCallParams
 from dotenv import load_dotenv
 import json
 import pandas as pd
+import re
 
 load_dotenv()
 
-def completeJsonFormat(parseList:list) -> list:
-    temp = []
-    for s in parseList:
-        if len(s) > 0 and s[-1] != "}":
-            temp.append(s + "}")
-        else:
-            temp.append(s)
-    return temp
+def completeJsonFormat(parseList:list, prefix: str) -> list:
+    res = []
+    if prefix == 'gpt':
+        for s in parseList:
+            new = s.replace("\\'", "'").replace('\\\\"', "'")
+            if s == 'ERROR':
+                res.append('{"error": "request too large"}')
+            else:
+                res.append(new)
+    elif prefix == 'claude':
+        for s in parseList:
+            new = re.sub(r' = \"(.*?)\"', r" = '\1'", s).replace('"{', '{').replace('}"', '}').replace('\\"', "'").replace('"["', '"[\'').replace('"]"', '\']"')\
+                    .replace('True', '"True"').replace('False', '"False"').replace('="text/csv"', "='text/csv'").replace('\\', '')
+            new = re.sub(r' LIKE \"(.*?)\"', r" = '\1'", new)
+            if s == 'ERROR':
+                res.append('{"error": "request too large"}')
+            elif len(new) > 0 and new[0] == '[' and new[-1] == ']':
+                new = '{"results":' + new + "}"
+                res.append(new)
+            elif s == '' or not s:
+                res.append('{}')
+            else:
+                res.append(new)
+
+    return res
 
 
-def formatToolCalls(index: int, output_dict: dict) -> list:
+def formatToolCalls(index: int, output_dict: dict, prefix: str) -> list:
     res = []
     toolMetadata = {}
     try:
@@ -26,13 +44,21 @@ def formatToolCalls(index: int, output_dict: dict) -> list:
     except Exception as e:
         print(e)
 
-    parsedToolNames = output_dict['tools'][index][2:len(output_dict['tools'][index]) - 2].split(",")
-    print(parsedToolNames)
-    parsedToolOutputs = output_dict['tool_outputs'][index][2:len(output_dict['tool_outputs'][index]) - 2].split("','")
-    parsedToolInputs =  output_dict['tool_inputs'][index][2:len(output_dict['tool_inputs'][index]) - 2].split("','")
+    parsedToolNames = output_dict['tools'][index][1:len(output_dict['tools'][index]) - 1].replace("'","").split(",")
+    parsedToolInputs = None
+    parsedToolOutputs = None
+    if prefix == 'gpt':
+        parsedToolOutputs = output_dict['tool_outputs'][index][2:len(output_dict['tool_outputs'][index]) - 2].replace("', '", "','").split("','")
+        parsedToolInputs =  output_dict['tool_inputs'][index][2:len(output_dict['tool_inputs'][index]) - 2].replace("', '", "','").split("','")
+    elif prefix == 'claude':
+        parsedToolOutputs = output_dict['tool_outputs'][index][2:len(output_dict['tool_outputs'][index]) - 2].replace("'", '"').replace("},{", "}||{").replace('}", "{', "}||{").replace('}", "[', "}||[").split("||")
+        parsedToolInputs =  output_dict['tool_inputs'][index][1:len(output_dict['tool_inputs'][index]) - 1].replace("'", '"').replace("},{", "}||{").replace("}, {", "}||{").split("||")
 
-    parsedToolOutputs = completeJsonFormat(parsedToolOutputs) 
-    parsedToolInputs = completeJsonFormat(parsedToolInputs) 
+    if parsedToolInputs and parsedToolOutputs:
+        parsedToolOutputs = completeJsonFormat(parsedToolOutputs, prefix) 
+        parsedToolInputs = completeJsonFormat(parsedToolInputs, prefix) 
+    else:
+        return res
 
     for i, toolName in enumerate(parsedToolNames):
         if toolName == '':
@@ -43,9 +69,20 @@ def formatToolCalls(index: int, output_dict: dict) -> list:
             for action in actions:
                 if action['function']['name'] == toolName:
                     description = action['function']['description']
+        try:
+            json.loads(parsedToolInputs[i])
+        except:
+            print(index)
+            print(parsedToolInputs[i])
+        try:
+            json.loads(parsedToolOutputs[i])
+        except:
+            print(index)
+            with open("Error.txt", "w") as text_file:
+                text_file.write(parsedToolOutputs[i])
+
         toolCall = ToolCall(name=toolName, description=description, input_parameters=json.loads(parsedToolInputs[i]), output=str(json.loads(parsedToolOutputs[i])))
         res.append(toolCall)
-    print(res)
     return res
 
 def formatExpectedToolCalls(index: int, output_dict: dict) -> list:
@@ -67,13 +104,11 @@ def evaluateTestCases(prefix):
         test_case = LLMTestCase(
             input=output_dict['prompt'][index],
             actual_output=output_dict['outputs'][index][2:len(output_dict['outputs'][index]) - 3],
-            tools_called=formatToolCalls(index, output_dict),
+            tools_called=formatToolCalls(index, output_dict, prefix),
             expected_tools=formatExpectedToolCalls(index, output_dict)
         ) 
         test_cases.append(test_case)
-        break
-    print(test_cases)
-
+    return
     tool_correctness= ToolCorrectnessMetric(evaluation_params = [ToolCallParams.TOOL])
     task_completion = TaskCompletionMetric(model="gpt-4o-mini")
 
@@ -82,4 +117,4 @@ def evaluateTestCases(prefix):
          json.dump(evaluation.model_dump(), f)
 
 evaluateTestCases("gpt")
-# evaluateTestCases("claude")
+evaluateTestCases("claude")
