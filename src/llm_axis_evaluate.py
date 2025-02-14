@@ -73,15 +73,11 @@ def formatToolCalls(index: int, output_dict: dict, prefix: str) -> list:
             for action in actions:
                 if action['function']['name'] == toolName:
                     description = action['function']['description']
+        #quick and dirty fix; not parsing inputs and outputs 100% for Claude :(
         if i >= len(parsedToolInputs):
             parsedToolInputs.append("{}")
         if i >= len(parsedToolOutputs):
             parsedToolOutputs.append("{}")
-        try:
-            json.loads(parsedToolInputs[i])
-        except:
-            print(index)
-            print(parsedToolInputs)
 
         toolCall = ToolCall(name=toolName, description=description, input_parameters=json.loads(parsedToolInputs[i]), output=str(parsedToolOutputs[i]))
         res.append(toolCall)
