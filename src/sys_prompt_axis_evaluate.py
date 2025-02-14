@@ -119,7 +119,7 @@ def evaluateTestCases(prefix, sys_prompt_num: int):
     task_completion = TaskCompletionMetric(model="gpt-4o-mini")
 
     evaluation = evaluate(test_cases, [tool_correctness, task_completion],max_concurrent=1, ignore_errors=True, run_async=False, throttle_value=10, use_cache=True) 
-    with open(f"./results/{prefix}-sys_prompt-{sys_prompt_num}-results.json", "w") as f:
+    with open(f"./results/{prefix}-sys-prompt-{sys_prompt_num}-results.json", "w") as f:
          json.dump(evaluation.model_dump(), f)
 
 #evaluateTestCases("claude", 1)

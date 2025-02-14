@@ -142,15 +142,24 @@ claude_llm = ChatAnthropic(model_name="claude-3-5-sonnet-20240620", timeout=None
 claude_graph = createGraph(claude_llm, tools)
 
 sys_prompt_1 = '''
-    You are a helpful assistant that helps users perform actions in 3rd-party applications 
-    like Salesforce, Hubspot, Google Drive, Notion, Slack, and Gmail.
-    '''
-sys_prompt_2 = '''
     You are a helpful assistant that helps users perform actions in 3rd-party applications. 
     Users will ask to create records and search for records in CRMs like Salesforce and Hubspot. 
     Users will also ask you to send messages/emails and search for messages/emails in messaging 
     platforms like Slack and Gmail. Lastly, users will ask to search through pages and documents like 
     in Google Drive and Notion. Use tools provided to help you with these tasks.
     '''
+sys_prompt_2 = '''
+    You are a helpful assistant that helps users perform actions in 3rd-party applications. 
+    Users will ask to create records and search for records in CRMs like Salesforce and Hubspot, 
+    send and search messages in Gmail and Slack, and search for documents and pages in Notion and 
+    Google Drive. Use tools provided to help you with these tasks.
+    
+    Some Rules:
+    * If a user mentions multiple data sources, use tools to search and/or take action across each data source.
+    * If you use a tool that searches for information, but fails, try using a slightly different filter with your next best guess. For example, if a user asks to find Mistral.ai in Salesforce, but you can’t find it by using Name=Mistral.ai, then try searching with name=Mistral
+    * If a tool continues to fail even after trying different inputs, try a different tool. For example when searching Salesforce contacts, 
+    if SALESFORCE_WRITE_SOQL_QUERY fails, try using SALESFORCE_SEARCH_RECORDS_CONTACT
+    '''
+
 runPrompt(test_dict, claude_graph, "claude", sys_prompt_1, 1)
 runPrompt(test_dict, claude_graph, "claude", sys_prompt_2, 2)
