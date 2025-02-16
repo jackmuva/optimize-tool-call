@@ -136,8 +136,8 @@ def runPrompt(test_dict, llm, sys_prompt:str="", prompt_num:int=0, tool_dict:dic
         for i in test_dict:
             df_dict[i] = list(test_dict[i].values())
         populated_df = pd.DataFrame.from_dict(df_dict)
-        populated_df.to_csv(f'./data/{llm}-sys-prompt-{prompt_num}-axis-dataset.csv')
-        print(f'Sucessfully created {llm} with prompt {prompt_num} dataset')
+        populated_df.to_csv(f'./data/{llm}-num-tool-axis-dataset.csv')
+        print(f'Sucessfully created {llm} with prompt {prompt_num} and agent routing dataset')
     except:
         print(f'Error creating {llm} dataset')
         with open(f"./data/{llm}-num-tools-cache.json", "w") as outfile: 
