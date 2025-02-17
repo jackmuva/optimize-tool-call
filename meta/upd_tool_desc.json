@@ -1,0 +1,2333 @@
+{
+    "actions": {
+        "salesforce": [
+            {
+                "type": "function",
+                "function": {
+                    "name": "SALESFORCE_CREATE_RECORD_CONTACT",
+                    "description": "Triggered when a user wants to Create Contact in Salesforce",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "Id": {
+                                "type": "string",
+                                "description": "Contact ID"
+                            },
+                            "IsDeleted": {
+                                "type": "boolean",
+                                "description": "Deleted"
+                            },
+                            "MasterRecordId": {
+                                "type": "string",
+                                "description": "Master Record ID"
+                            },
+                            "AccountId": {
+                                "type": "string",
+                                "description": "Account ID"
+                            },
+                            "LastName": {
+                                "type": "string",
+                                "description": "Last Name"
+                            },
+                            "FirstName": {
+                                "type": "string",
+                                "description": "First Name"
+                            },
+                            "Salutation": {
+                                "type": "string",
+                                "description": "Salutation",
+                                "enum": [
+                                    "Mr.",
+                                    "Ms.",
+                                    "Mrs.",
+                                    "Dr.",
+                                    "Prof.",
+                                    "Mx."
+                                ]
+                            },
+                            "Name": {
+                                "type": "string",
+                                "description": "Full Name"
+                            },
+                            "OtherStreet": {
+                                "type": "string",
+                                "description": "Other Street"
+                            },
+                            "OtherCity": {
+                                "type": "string",
+                                "description": "Other City"
+                            },
+                            "OtherState": {
+                                "type": "string",
+                                "description": "Other State/Province"
+                            },
+                            "OtherPostalCode": {
+                                "type": "string",
+                                "description": "Other Zip/Postal Code"
+                            },
+                            "OtherCountry": {
+                                "type": "string",
+                                "description": "Other Country"
+                            },
+                            "OtherLatitude": {
+                                "type": "string",
+                                "description": "Other Latitude"
+                            },
+                            "OtherLongitude": {
+                                "type": "string",
+                                "description": "Other Longitude"
+                            },
+                            "OtherGeocodeAccuracy": {
+                                "type": "string",
+                                "description": "Other Geocode Accuracy",
+                                "enum": [
+                                    "Address",
+                                    "NearAddress",
+                                    "Block",
+                                    "Street",
+                                    "ExtendedZip",
+                                    "Zip",
+                                    "Neighborhood",
+                                    "City",
+                                    "County",
+                                    "State",
+                                    "Unknown"
+                                ]
+                            },
+                            "OtherAddress": {
+                                "type": "string",
+                                "description": "Other Address"
+                            },
+                            "MailingStreet": {
+                                "type": "string",
+                                "description": "Mailing Street"
+                            },
+                            "MailingCity": {
+                                "type": "string",
+                                "description": "Mailing City"
+                            },
+                            "MailingState": {
+                                "type": "string",
+                                "description": "Mailing State/Province"
+                            },
+                            "MailingPostalCode": {
+                                "type": "string",
+                                "description": "Mailing Zip/Postal Code"
+                            },
+                            "MailingCountry": {
+                                "type": "string",
+                                "description": "Mailing Country"
+                            },
+                            "MailingLatitude": {
+                                "type": "string",
+                                "description": "Mailing Latitude"
+                            },
+                            "MailingLongitude": {
+                                "type": "string",
+                                "description": "Mailing Longitude"
+                            },
+                            "MailingGeocodeAccuracy": {
+                                "type": "string",
+                                "description": "Mailing Geocode Accuracy",
+                                "enum": [
+                                    "Address",
+                                    "NearAddress",
+                                    "Block",
+                                    "Street",
+                                    "ExtendedZip",
+                                    "Zip",
+                                    "Neighborhood",
+                                    "City",
+                                    "County",
+                                    "State",
+                                    "Unknown"
+                                ]
+                            },
+                            "MailingAddress": {
+                                "type": "string",
+                                "description": "Mailing Address"
+                            },
+                            "Phone": {
+                                "type": "string",
+                                "description": "Business Phone"
+                            },
+                            "Fax": {
+                                "type": "string",
+                                "description": "Business Fax"
+                            },
+                            "MobilePhone": {
+                                "type": "string",
+                                "description": "Mobile Phone"
+                            },
+                            "HomePhone": {
+                                "type": "string",
+                                "description": "Home Phone"
+                            },
+                            "OtherPhone": {
+                                "type": "string",
+                                "description": "Other Phone"
+                            },
+                            "AssistantPhone": {
+                                "type": "string",
+                                "description": "Asst. Phone"
+                            },
+                            "ReportsToId": {
+                                "type": "string",
+                                "description": "Reports To ID"
+                            },
+                            "Email": {
+                                "type": "string",
+                                "description": "Email"
+                            },
+                            "Title": {
+                                "type": "string",
+                                "description": "Title"
+                            },
+                            "Department": {
+                                "type": "string",
+                                "description": "Department"
+                            },
+                            "AssistantName": {
+                                "type": "string",
+                                "description": "Assistant's Name"
+                            },
+                            "LeadSource": {
+                                "type": "string",
+                                "description": "Lead Source",
+                                "enum": [
+                                    "Web",
+                                    "Phone Inquiry",
+                                    "Partner Referral",
+                                    "Purchased List",
+                                    "Other"
+                                ]
+                            },
+                            "Birthdate": {
+                                "type": "string",
+                                "description": "Birthdate"
+                            },
+                            "Description": {
+                                "type": "string",
+                                "description": "Contact Description"
+                            },
+                            "OwnerId": {
+                                "type": "string",
+                                "description": "Owner ID"
+                            },
+                            "CreatedDate": {
+                                "type": "string",
+                                "description": "Created Date"
+                            },
+                            "CreatedById": {
+                                "type": "string",
+                                "description": "Created By ID"
+                            },
+                            "LastModifiedDate": {
+                                "type": "string",
+                                "description": "Last Modified Date"
+                            },
+                            "LastModifiedById": {
+                                "type": "string",
+                                "description": "Last Modified By ID"
+                            },
+                            "SystemModstamp": {
+                                "type": "string",
+                                "description": "System Modstamp"
+                            },
+                            "LastActivityDate": {
+                                "type": "string",
+                                "description": "Last Activity"
+                            },
+                            "LastCURequestDate": {
+                                "type": "string",
+                                "description": "Last Stay-in-Touch Request Date"
+                            },
+                            "LastCUUpdateDate": {
+                                "type": "string",
+                                "description": "Last Stay-in-Touch Save Date"
+                            },
+                            "LastViewedDate": {
+                                "type": "string",
+                                "description": "Last Viewed Date"
+                            },
+                            "LastReferencedDate": {
+                                "type": "string",
+                                "description": "Last Referenced Date"
+                            },
+                            "EmailBouncedReason": {
+                                "type": "string",
+                                "description": "Email Bounced Reason"
+                            },
+                            "EmailBouncedDate": {
+                                "type": "string",
+                                "description": "Email Bounced Date"
+                            },
+                            "IsEmailBounced": {
+                                "type": "boolean",
+                                "description": "Is Email Bounced"
+                            },
+                            "PhotoUrl": {
+                                "type": "string",
+                                "description": "Photo URL"
+                            },
+                            "Jigsaw": {
+                                "type": "string",
+                                "description": "Data.com Key"
+                            },
+                            "JigsawContactId": {
+                                "type": "string",
+                                "description": "Jigsaw Contact ID"
+                            },
+                            "CleanStatus": {
+                                "type": "string",
+                                "description": "Clean Status",
+                                "enum": [
+                                    "Matched",
+                                    "Different",
+                                    "Acknowledged",
+                                    "NotFound",
+                                    "Inactive",
+                                    "Pending",
+                                    "SelectMatch",
+                                    "Skipped"
+                                ]
+                            },
+                            "IndividualId": {
+                                "type": "string",
+                                "description": "Individual ID"
+                            },
+                            "IsPriorityRecord": {
+                                "type": "boolean",
+                                "description": "Important"
+                            },
+                            "ContactSource": {
+                                "type": "string",
+                                "description": "Creation Source",
+                                "enum": [
+                                    "Auto Create"
+                                ]
+                            },
+                            "Level__c": {
+                                "type": "string",
+                                "description": "Level",
+                                "enum": [
+                                    "Secondary",
+                                    "Tertiary",
+                                    "Primary"
+                                ]
+                            },
+                            "Languages__c": {
+                                "type": "string",
+                                "description": "Languages"
+                            },
+                            "BANT__c": {
+                                "type": "string",
+                                "description": "BANT"
+                            }
+                        },
+                        "required": [
+                            "LastName",
+                            "Name"
+                        ],
+                        "additionalProperties": false
+                    }
+                }
+            },{
+                "type": "function",
+                "function": {
+                    "name": "HUBSPOT_SEARCH_RECORDS_CONTACTS",
+                    "description": "Triggered when a user wants to Search contacts in Hubspot",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "filterFormula": {
+                                "type": "string",
+                                "description": "Filter search : Search for Records that match specified filters. (example: \"field\")"
+                            },
+                            "paginationParameters": {
+                                "type": "object",
+                                "description": "Pagination parameters for paginated results",
+                                "properties": {
+                                    "pageCursor": {
+                                        "type": "string",
+                                        "description": "The cursor indicating the current page"
+                                    }
+                                },
+                                "required": [],
+                                "additionalProperties": false
+                            }
+                        },
+                        "required": [],
+                        "additionalProperties": false
+                    }
+                }
+            },{
+                "type": "function",
+                "function": {
+                    "name": "SALESFORCE_WRITE_SOQL_QUERY",
+                    "description": "Triggered when a user wants to write an SOQL query",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "query": {
+                                "type": "object",
+                                "description": "SOQL Query (example: \"SELECT Id, Name\nFROM Account\nWHERE Name = 'Ethan'\")"
+                            }
+                        },
+                        "required": [
+                            "query"
+                        ],
+                        "additionalProperties": false
+                    }
+                }
+            }
+        ],
+        "hubspot": [
+            {
+                "type": "function",
+                "function": {
+                    "name": "HUBSPOT_CREATE_RECORD_CONTACTS",
+                    "description": "Triggered when a user wants to Create contacts in Hubspot",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "firstname": {
+                                "type": "string",
+                                "description": "First Name"
+                            },
+                            "lastname": {
+                                "type": "string",
+                                "description": "Last Name"
+                            },
+                            "email": {
+                                "type": "string",
+                                "description": "Email"
+                            },
+                            "phone": {
+                                "type": "string",
+                                "description": "Phone Number"
+                            },
+                            "hubspot_owner_id": {
+                                "type": "string",
+                                "description": "Contact owner",
+                                "enum": []
+                            },
+                            "lifecyclestage": {
+                                "type": "string",
+                                "description": "Lifecycle Stage",
+                                "enum": [
+                                    "subscriber",
+                                    "lead",
+                                    "marketingqualifiedlead",
+                                    "salesqualifiedlead",
+                                    "opportunity",
+                                    "customer",
+                                    "evangelist",
+                                    "other"
+                                ]
+                            },
+                            "hs_lead_status": {
+                                "type": "string",
+                                "description": "Lead Status",
+                                "enum": [
+                                    "NEW",
+                                    "OPEN",
+                                    "IN_PROGRESS",
+                                    "OPEN_DEAL",
+                                    "UNQUALIFIED",
+                                    "ATTEMPTED_TO_CONTACT",
+                                    "CONNECTED",
+                                    "BAD_TIMING"
+                                ]
+                            },
+                            "annualrevenue": {
+                                "type": "string",
+                                "description": "Annual Revenue"
+                            },
+                            "hs_all_assigned_business_unit_ids": {
+                                "type": "string",
+                                "description": "Business units",
+                                "enum": []
+                            },
+                            "hs_buying_role": {
+                                "type": "string",
+                                "description": "Buying Role",
+                                "enum": [
+                                    "BLOCKER",
+                                    "BUDGET_HOLDER",
+                                    "CHAMPION",
+                                    "DECISION_MAKER",
+                                    "END_USER",
+                                    "EXECUTIVE_SPONSOR",
+                                    "INFLUENCER",
+                                    "LEGAL_AND_COMPLIANCE",
+                                    "OTHER"
+                                ]
+                            },
+                            "city": {
+                                "type": "string",
+                                "description": "City"
+                            },
+                            "hs_facebook_ad_clicked": {
+                                "type": "boolean",
+                                "description": "Clicked Facebook ad"
+                            },
+                            "hs_linkedin_ad_clicked": {
+                                "type": "string",
+                                "description": "Clicked LinkedIn Ad",
+                                "enum": [
+                                    "true",
+                                    "false"
+                                ]
+                            },
+                            "hs_clicked_linkedin_ad": {
+                                "type": "string",
+                                "description": "Clicked on a LinkedIn Ad",
+                                "enum": [
+                                    "true",
+                                    "false"
+                                ]
+                            },
+                            "closedate": {
+                                "type": "string",
+                                "description": "Close Date"
+                            },
+                            "company": {
+                                "type": "string",
+                                "description": "Company Name"
+                            },
+                            "company_size": {
+                                "type": "string",
+                                "description": "Company size"
+                            },
+                            "country": {
+                                "type": "string",
+                                "description": "Country/Region"
+                            },
+                            "hs_country_region_code": {
+                                "type": "string",
+                                "description": "Country/Region Code"
+                            },
+                            "hs_v2_cumulative_time_in_customer": {
+                                "type": "number",
+                                "description": "Cumulative time in \"Customer (Lifecycle Stage Pipeline)\""
+                            },
+                            "hs_v2_cumulative_time_in_evangelist": {
+                                "type": "number",
+                                "description": "Cumulative time in \"Evangelist (Lifecycle Stage Pipeline)\""
+                            },
+                            "hs_v2_cumulative_time_in_lead": {
+                                "type": "number",
+                                "description": "Cumulative time in \"Lead (Lifecycle Stage Pipeline)\""
+                            },
+                            "hs_v2_cumulative_time_in_marketingqualifiedlead": {
+                                "type": "number",
+                                "description": "Cumulative time in \"Marketing Qualified Lead (Lifecycle Stage Pipeline)\""
+                            },
+                            "hs_v2_cumulative_time_in_opportunity": {
+                                "type": "number",
+                                "description": "Cumulative time in \"Opportunity (Lifecycle Stage Pipeline)\""
+                            },
+                            "hs_v2_cumulative_time_in_other": {
+                                "type": "number",
+                                "description": "Cumulative time in \"Other (Lifecycle Stage Pipeline)\""
+                            },
+                            "hs_v2_cumulative_time_in_salesqualifiedlead": {
+                                "type": "number",
+                                "description": "Cumulative time in \"Sales Qualified Lead (Lifecycle Stage Pipeline)\""
+                            },
+                            "hs_v2_cumulative_time_in_subscriber": {
+                                "type": "number",
+                                "description": "Cumulative time in \"Subscriber (Lifecycle Stage Pipeline)\""
+                            },
+                            "hs_v2_date_entered_customer": {
+                                "type": "string",
+                                "description": "Date entered \"Customer (Lifecycle Stage Pipeline)\""
+                            },
+                            "hs_v2_date_entered_evangelist": {
+                                "type": "string",
+                                "description": "Date entered \"Evangelist (Lifecycle Stage Pipeline)\""
+                            },
+                            "hs_v2_date_entered_lead": {
+                                "type": "string",
+                                "description": "Date entered \"Lead (Lifecycle Stage Pipeline)\""
+                            },
+                            "hs_v2_date_entered_marketingqualifiedlead": {
+                                "type": "string",
+                                "description": "Date entered \"Marketing Qualified Lead (Lifecycle Stage Pipeline)\""
+                            },
+                            "hs_v2_date_entered_opportunity": {
+                                "type": "string",
+                                "description": "Date entered \"Opportunity (Lifecycle Stage Pipeline)\""
+                            },
+                            "hs_v2_date_entered_other": {
+                                "type": "string",
+                                "description": "Date entered \"Other (Lifecycle Stage Pipeline)\""
+                            },
+                            "hs_v2_date_entered_salesqualifiedlead": {
+                                "type": "string",
+                                "description": "Date entered \"Sales Qualified Lead (Lifecycle Stage Pipeline)\""
+                            },
+                            "hs_v2_date_entered_subscriber": {
+                                "type": "string",
+                                "description": "Date entered \"Subscriber (Lifecycle Stage Pipeline)\""
+                            },
+                            "hs_v2_date_exited_customer": {
+                                "type": "string",
+                                "description": "Date exited \"Customer (Lifecycle Stage Pipeline)\""
+                            },
+                            "hs_v2_date_exited_evangelist": {
+                                "type": "string",
+                                "description": "Date exited \"Evangelist (Lifecycle Stage Pipeline)\""
+                            },
+                            "hs_v2_date_exited_lead": {
+                                "type": "string",
+                                "description": "Date exited \"Lead (Lifecycle Stage Pipeline)\""
+                            },
+                            "hs_v2_date_exited_marketingqualifiedlead": {
+                                "type": "string",
+                                "description": "Date exited \"Marketing Qualified Lead (Lifecycle Stage Pipeline)\""
+                            },
+                            "hs_v2_date_exited_opportunity": {
+                                "type": "string",
+                                "description": "Date exited \"Opportunity (Lifecycle Stage Pipeline)\""
+                            },
+                            "hs_v2_date_exited_other": {
+                                "type": "string",
+                                "description": "Date exited \"Other (Lifecycle Stage Pipeline)\""
+                            },
+                            "hs_v2_date_exited_salesqualifiedlead": {
+                                "type": "string",
+                                "description": "Date exited \"Sales Qualified Lead (Lifecycle Stage Pipeline)\""
+                            },
+                            "hs_v2_date_exited_subscriber": {
+                                "type": "string",
+                                "description": "Date exited \"Subscriber (Lifecycle Stage Pipeline)\""
+                            },
+                            "date_of_birth": {
+                                "type": "string",
+                                "description": "Date of birth"
+                            },
+                            "degree": {
+                                "type": "string",
+                                "description": "Degree"
+                            },
+                            "hs_email_customer_quarantined_reason": {
+                                "type": "string",
+                                "description": "Email address quarantine reason",
+                                "enum": [
+                                    "SUSPENSION_REMEDIATION",
+                                    "BLOCKLIST_REMEDIATION",
+                                    "TRUST_SAFETY_REMEDIATION"
+                                ]
+                            },
+                            "hs_role": {
+                                "type": "string",
+                                "description": "Employment Role",
+                                "enum": [
+                                    "accounting",
+                                    "administrative",
+                                    "business_development",
+                                    "communications",
+                                    "consulting",
+                                    "customer_service",
+                                    "design",
+                                    "education",
+                                    "engineering",
+                                    "entrepreneurship",
+                                    "finance",
+                                    "health_professional",
+                                    "human_resources",
+                                    "information_technology",
+                                    "legal",
+                                    "marketing",
+                                    "operations",
+                                    "product",
+                                    "project_management",
+                                    "public_relations",
+                                    "quality_assurance",
+                                    "real_estate",
+                                    "recruiting",
+                                    "research",
+                                    "sales",
+                                    "support",
+                                    "retired"
+                                ]
+                            },
+                            "hs_seniority": {
+                                "type": "string",
+                                "description": "Employment Seniority",
+                                "enum": [
+                                    "vp",
+                                    "director",
+                                    "entry",
+                                    "executive",
+                                    "manager",
+                                    "owner",
+                                    "partner",
+                                    "senior",
+                                    "employee"
+                                ]
+                            },
+                            "hs_sub_role": {
+                                "type": "string",
+                                "description": "Employment Sub Role",
+                                "enum": [
+                                    "account_executive",
+                                    "account_manager",
+                                    "accountant",
+                                    "accounting_manager",
+                                    "administrative_assistant",
+                                    "appraisal",
+                                    "architect_it",
+                                    "assistant",
+                                    "attorney",
+                                    "auditor",
+                                    "brand_marketing",
+                                    "business_analyst",
+                                    "business_consultant",
+                                    "business_manager",
+                                    "chief_financial_officer",
+                                    "communications_manager",
+                                    "community",
+                                    "content_marketing",
+                                    "contracts",
+                                    "creative",
+                                    "customer_service_specialist",
+                                    "customer_success",
+                                    "data_it",
+                                    "data_science_engineer",
+                                    "database_administrator",
+                                    "design_engineer",
+                                    "development_specialist",
+                                    "devops_engineer",
+                                    "digital_marketing",
+                                    "director_of_development",
+                                    "editorial",
+                                    "electrical_engineer",
+                                    "engineering_manager",
+                                    "events",
+                                    "executive_assistant",
+                                    "facilities",
+                                    "fashion_design",
+                                    "field_marketing",
+                                    "financial_analyst",
+                                    "financial_controller",
+                                    "fitness",
+                                    "founder",
+                                    "general_counsel",
+                                    "general_manager",
+                                    "general_partner",
+                                    "graphic_design",
+                                    "human_resources_specialist",
+                                    "information_technology_specialist",
+                                    "investment",
+                                    "investment_banker",
+                                    "journalist",
+                                    "key_account_manager",
+                                    "law_enforcement",
+                                    "lawyer",
+                                    "logistics_manager",
+                                    "management",
+                                    "marketing_specialist",
+                                    "mechanical_engineer",
+                                    "medical_doctor",
+                                    "network_engineer",
+                                    "nurse",
+                                    "office_management",
+                                    "office_manager",
+                                    "operational_specialist",
+                                    "owner",
+                                    "paralegal",
+                                    "principal",
+                                    "product_design",
+                                    "product_manager",
+                                    "product_marketing",
+                                    "production_manager",
+                                    "professor",
+                                    "program_coordinator",
+                                    "program_manager",
+                                    "project_engineer",
+                                    "project_manager",
+                                    "property_manager",
+                                    "qa_engineer",
+                                    "qa_it",
+                                    "quality_assurance_manager",
+                                    "quality_assurance_specialist",
+                                    "realtor",
+                                    "recruiter",
+                                    "relationship_manager",
+                                    "research_analyst",
+                                    "risk_compliance",
+                                    "sales_executive",
+                                    "sales_operations",
+                                    "sales_specialist",
+                                    "salesperson",
+                                    "secretary",
+                                    "social_marketing",
+                                    "software_engineer",
+                                    "strategy",
+                                    "student",
+                                    "support",
+                                    "support_specialist",
+                                    "system_administrator",
+                                    "system_analyst",
+                                    "systems_engineer",
+                                    "talent",
+                                    "tax_audit",
+                                    "teacher",
+                                    "technical_manager",
+                                    "technical_support_specialist",
+                                    "therapist",
+                                    "training",
+                                    "video",
+                                    "web_developer",
+                                    "writer",
+                                    "chief_executive_officer",
+                                    "chief_operating_officer",
+                                    "chief_marketing_officer",
+                                    "chief_technology_officer",
+                                    "chief_information_officer",
+                                    "chief_human_resources_officer",
+                                    "chief_compliance_officer",
+                                    "chief_risk_officer",
+                                    "chief_data_officer",
+                                    "chief_product_officer",
+                                    "chief_revenue_officer",
+                                    "chief_sustainability_officer",
+                                    "chief_legal_officer",
+                                    "chief_security_officer",
+                                    "chief_experience_officer",
+                                    "chief_innovation_officer",
+                                    "retail",
+                                    "retired"
+                                ]
+                            },
+                            "hs_enriched_email_bounce_detected": {
+                                "type": "boolean",
+                                "description": "Enriched Email Bounce Detected"
+                            },
+                            "hs_facebookid": {
+                                "type": "string",
+                                "description": "Facebook ID"
+                            },
+                            "hs_facebook_click_id": {
+                                "type": "string",
+                                "description": "Facebook click id"
+                            },
+                            "favorite_content_topics": {
+                                "type": "string",
+                                "description": "Favorite Content Topics",
+                                "enum": [
+                                    "Strategy",
+                                    "Operational",
+                                    "Financial",
+                                    "IT",
+                                    "HR"
+                                ]
+                            },
+                            "fax": {
+                                "type": "string",
+                                "description": "Fax Number"
+                            },
+                            "field_of_study": {
+                                "type": "string",
+                                "description": "Field of study"
+                            },
+                            "followercount": {
+                                "type": "number",
+                                "description": "Follower Count"
+                            },
+                            "gender": {
+                                "type": "string",
+                                "description": "Gender"
+                            },
+                            "hs_google_click_id": {
+                                "type": "string",
+                                "description": "Google ad click id"
+                            },
+                            "graduation_date": {
+                                "type": "string",
+                                "description": "Graduation date"
+                            },
+                            "owneremail": {
+                                "type": "string",
+                                "description": "HubSpot Owner Email (legacy)"
+                            },
+                            "ownername": {
+                                "type": "string",
+                                "description": "HubSpot Owner Name (legacy)"
+                            },
+                            "industry": {
+                                "type": "string",
+                                "description": "Industry"
+                            },
+                            "jobtitle": {
+                                "type": "string",
+                                "description": "Job Title"
+                            },
+                            "job_function": {
+                                "type": "string",
+                                "description": "Job function"
+                            },
+                            "hs_journey_stage": {
+                                "type": "string",
+                                "description": "Journey Stage",
+                                "enum": [
+                                    "new_contact",
+                                    "in_nurturing",
+                                    "low_intent",
+                                    "mid_intent",
+                                    "high_intent",
+                                    "unqualified",
+                                    "qualified",
+                                    "onboarding",
+                                    "post_onboarding",
+                                    "engaged",
+                                    "unengaged"
+                                ]
+                            },
+                            "kloutscoregeneral": {
+                                "type": "number",
+                                "description": "Klout Score"
+                            },
+                            "hs_last_metered_enrichment_timestamp": {
+                                "type": "string",
+                                "description": "Last Metered Enrichment Timestamp"
+                            },
+                            "hs_latest_source": {
+                                "type": "string",
+                                "description": "Latest Traffic Source",
+                                "enum": [
+                                    "ORGANIC_SEARCH",
+                                    "PAID_SEARCH",
+                                    "EMAIL_MARKETING",
+                                    "SOCIAL_MEDIA",
+                                    "REFERRALS",
+                                    "OTHER_CAMPAIGNS",
+                                    "DIRECT_TRAFFIC",
+                                    "OFFLINE",
+                                    "PAID_SOCIAL"
+                                ]
+                            },
+                            "hs_latest_source_timestamp": {
+                                "type": "string",
+                                "description": "Latest Traffic Source Date"
+                            },
+                            "hs_v2_latest_time_in_customer": {
+                                "type": "number",
+                                "description": "Latest time in \"Customer (Lifecycle Stage Pipeline)\""
+                            },
+                            "hs_v2_latest_time_in_evangelist": {
+                                "type": "number",
+                                "description": "Latest time in \"Evangelist (Lifecycle Stage Pipeline)\""
+                            },
+                            "hs_v2_latest_time_in_lead": {
+                                "type": "number",
+                                "description": "Latest time in \"Lead (Lifecycle Stage Pipeline)\""
+                            },
+                            "hs_v2_latest_time_in_marketingqualifiedlead": {
+                                "type": "number",
+                                "description": "Latest time in \"Marketing Qualified Lead (Lifecycle Stage Pipeline)\""
+                            },
+                            "hs_v2_latest_time_in_opportunity": {
+                                "type": "number",
+                                "description": "Latest time in \"Opportunity (Lifecycle Stage Pipeline)\""
+                            },
+                            "hs_v2_latest_time_in_other": {
+                                "type": "number",
+                                "description": "Latest time in \"Other (Lifecycle Stage Pipeline)\""
+                            },
+                            "hs_v2_latest_time_in_salesqualifiedlead": {
+                                "type": "number",
+                                "description": "Latest time in \"Sales Qualified Lead (Lifecycle Stage Pipeline)\""
+                            },
+                            "hs_v2_latest_time_in_subscriber": {
+                                "type": "number",
+                                "description": "Latest time in \"Subscriber (Lifecycle Stage Pipeline)\""
+                            },
+                            "hs_legal_basis": {
+                                "type": "string",
+                                "description": "Legal basis for processing contact's data",
+                                "enum": [
+                                    "Legitimate interest \u2013 prospect/lead",
+                                    "Legitimate interest \u2013 existing customer",
+                                    "Legitimate interest - other",
+                                    "Performance of a contract",
+                                    "Freely given consent from contact",
+                                    "Not applicable"
+                                ]
+                            },
+                            "linkedinbio": {
+                                "type": "string",
+                                "description": "LinkedIn Bio"
+                            },
+                            "linkedinconnections": {
+                                "type": "number",
+                                "description": "LinkedIn Connections"
+                            },
+                            "hs_linkedin_url": {
+                                "type": "string",
+                                "description": "LinkedIn URL"
+                            },
+                            "hs_linkedinid": {
+                                "type": "string",
+                                "description": "Linkedin ID"
+                            },
+                            "hs_live_enrichment_deadline": {
+                                "type": "string",
+                                "description": "Live enrichment deadline"
+                            },
+                            "marital_status": {
+                                "type": "string",
+                                "description": "Marital Status"
+                            },
+                            "hs_content_membership_email": {
+                                "type": "string",
+                                "description": "Member email"
+                            },
+                            "hs_content_membership_notes": {
+                                "type": "string",
+                                "description": "Membership Notes"
+                            },
+                            "message": {
+                                "type": "string",
+                                "description": "Message"
+                            },
+                            "military_status": {
+                                "type": "string",
+                                "description": "Military status"
+                            },
+                            "mobilephone": {
+                                "type": "string",
+                                "description": "Mobile Phone Number"
+                            },
+                            "numemployees": {
+                                "type": "string",
+                                "description": "Number of Employees",
+                                "enum": [
+                                    "1-5",
+                                    "5-25",
+                                    "25-50",
+                                    "50-100",
+                                    "100-500",
+                                    "500-1000",
+                                    "1000+"
+                                ]
+                            },
+                            "hs_analytics_source": {
+                                "type": "string",
+                                "description": "Original Traffic Source",
+                                "enum": [
+                                    "ORGANIC_SEARCH",
+                                    "PAID_SEARCH",
+                                    "EMAIL_MARKETING",
+                                    "SOCIAL_MEDIA",
+                                    "REFERRALS",
+                                    "OTHER_CAMPAIGNS",
+                                    "DIRECT_TRAFFIC",
+                                    "OFFLINE",
+                                    "PAID_SOCIAL"
+                                ]
+                            },
+                            "hs_persona": {
+                                "type": "string",
+                                "description": "Persona",
+                                "enum": []
+                            },
+                            "photo": {
+                                "type": "string",
+                                "description": "Photo"
+                            },
+                            "hs_pinned_engagement_id": {
+                                "type": "number",
+                                "description": "Pinned engagement ID"
+                            },
+                            "hs_pipeline": {
+                                "type": "string",
+                                "description": "Pipeline",
+                                "enum": []
+                            },
+                            "zip": {
+                                "type": "string",
+                                "description": "Postal Code"
+                            },
+                            "preferred_channels": {
+                                "type": "string",
+                                "description": "Preferred channels",
+                                "enum": [
+                                    "Email",
+                                    "SMS",
+                                    "Blog",
+                                    "Instagram",
+                                    "Linkedin",
+                                    "Podcasts"
+                                ]
+                            },
+                            "hs_language": {
+                                "type": "string",
+                                "description": "Preferred language",
+                                "enum": [
+                                    "af",
+                                    "sq",
+                                    "sq-al",
+                                    "ar",
+                                    "ar-dz",
+                                    "ar-bh",
+                                    "ar-eg",
+                                    "ar-iq",
+                                    "ar-jo",
+                                    "ar-kw",
+                                    "ar-lb",
+                                    "ar-ly",
+                                    "ar-ma",
+                                    "ar-om",
+                                    "ar-qa",
+                                    "ar-sa",
+                                    "ar-sd",
+                                    "ar-sy",
+                                    "ar-tn",
+                                    "ar-ae",
+                                    "ar-ye",
+                                    "hy",
+                                    "as",
+                                    "eu",
+                                    "be",
+                                    "be-by",
+                                    "bn",
+                                    "ba",
+                                    "bg",
+                                    "bg-bg",
+                                    "my",
+                                    "my-mm",
+                                    "ca",
+                                    "ca-es",
+                                    "cb-pl",
+                                    "zh",
+                                    "zh-cn",
+                                    "zh-hk",
+                                    "zh-mo",
+                                    "zh-sg",
+                                    "zh-tw",
+                                    "zh-chs",
+                                    "zh-cht",
+                                    "hr",
+                                    "hr-hr",
+                                    "cs",
+                                    "cs-cz",
+                                    "da",
+                                    "da-dk",
+                                    "nl",
+                                    "nl-be",
+                                    "nl-nl",
+                                    "en",
+                                    "en-au",
+                                    "en-ca",
+                                    "en-hk",
+                                    "en-in",
+                                    "en-ie",
+                                    "en-my",
+                                    "en-mt",
+                                    "en-nz",
+                                    "en-ph",
+                                    "en-sg",
+                                    "en-za",
+                                    "en-gb",
+                                    "en-us",
+                                    "en-zw",
+                                    "et",
+                                    "et-ee",
+                                    "fo",
+                                    "fa",
+                                    "fi",
+                                    "fi-fi",
+                                    "fr",
+                                    "fr-be",
+                                    "fr-ca",
+                                    "fr-fr",
+                                    "fr-lu",
+                                    "fr-mc",
+                                    "fr-ch",
+                                    "gl",
+                                    "ka",
+                                    "de",
+                                    "de-at",
+                                    "de-de",
+                                    "de-gr",
+                                    "de-li",
+                                    "de-lu",
+                                    "de-ch",
+                                    "el",
+                                    "el-cy",
+                                    "el-gr",
+                                    "gu",
+                                    "ht",
+                                    "ha",
+                                    "he",
+                                    "he-il",
+                                    "iw-il",
+                                    "hi",
+                                    "hi-in",
+                                    "hu",
+                                    "hu-hu",
+                                    "is",
+                                    "is-is",
+                                    "id",
+                                    "in-id",
+                                    "ga",
+                                    "ga-ie",
+                                    "it",
+                                    "it-it",
+                                    "it-ch",
+                                    "ja",
+                                    "ja-jp",
+                                    "kn",
+                                    "kk",
+                                    "rw",
+                                    "ki",
+                                    "kok",
+                                    "ko",
+                                    "ko-kr",
+                                    "ku",
+                                    "ky",
+                                    "lo",
+                                    "lv",
+                                    "lv-lv",
+                                    "lt",
+                                    "lt-lt",
+                                    "mk",
+                                    "mk-mk",
+                                    "mg",
+                                    "ms",
+                                    "m1",
+                                    "ms-bn",
+                                    "ms-my",
+                                    "mt",
+                                    "mt-mt",
+                                    "mr",
+                                    "mn",
+                                    "no",
+                                    "nb",
+                                    "no-no",
+                                    "ny",
+                                    "pl",
+                                    "pl-pl",
+                                    "pt",
+                                    "pt-br",
+                                    "pt-pt",
+                                    "pa",
+                                    "ro",
+                                    "ro-ro",
+                                    "ru",
+                                    "ru-ru",
+                                    "sa",
+                                    "sr",
+                                    "sr-ba",
+                                    "sr-me",
+                                    "sr-rs",
+                                    "sr-cs",
+                                    "sk",
+                                    "sk-sk",
+                                    "sl",
+                                    "sl-si",
+                                    "es",
+                                    "es-ar",
+                                    "es-bo",
+                                    "es-cl",
+                                    "es-co",
+                                    "es-cr",
+                                    "es-cu",
+                                    "es-do",
+                                    "es-ec",
+                                    "es-sv",
+                                    "es-gt",
+                                    "es-hn",
+                                    "es-mx",
+                                    "es-ni",
+                                    "es-pa",
+                                    "es-py",
+                                    "es-pe",
+                                    "es-pr",
+                                    "es-es",
+                                    "es-us",
+                                    "es-uy",
+                                    "es-ve",
+                                    "sw",
+                                    "sv",
+                                    "sv-fi",
+                                    "sv-se",
+                                    "sy",
+                                    "t1",
+                                    "ta",
+                                    "tt",
+                                    "te",
+                                    "th",
+                                    "th-th",
+                                    "tr",
+                                    "tr-tr",
+                                    "uk",
+                                    "uk-ua",
+                                    "ur",
+                                    "vi",
+                                    "vi-vn",
+                                    "yo"
+                                ]
+                            },
+                            "associatedcompanyid": {
+                                "type": "number",
+                                "description": "Primary Associated Company ID"
+                            },
+                            "relationship_status": {
+                                "type": "string",
+                                "description": "Relationship Status"
+                            },
+                            "salutation": {
+                                "type": "string",
+                                "description": "Salutation"
+                            },
+                            "school": {
+                                "type": "string",
+                                "description": "School"
+                            },
+                            "seniority": {
+                                "type": "string",
+                                "description": "Seniority"
+                            },
+                            "hs_shared_team_ids": {
+                                "type": "string",
+                                "description": "Shared teams",
+                                "enum": []
+                            },
+                            "hs_shared_user_ids": {
+                                "type": "string",
+                                "description": "Shared users",
+                                "enum": []
+                            },
+                            "hs_feedback_show_nps_web_survey": {
+                                "type": "boolean",
+                                "description": "Should be shown an NPS web survey"
+                            },
+                            "start_date": {
+                                "type": "string",
+                                "description": "Start date"
+                            },
+                            "state": {
+                                "type": "string",
+                                "description": "State/Region"
+                            },
+                            "hs_state_code": {
+                                "type": "string",
+                                "description": "State/Region Code"
+                            },
+                            "hs_content_membership_status": {
+                                "type": "string",
+                                "description": "Status",
+                                "enum": [
+                                    "active",
+                                    "inactive"
+                                ]
+                            },
+                            "address": {
+                                "type": "string",
+                                "description": "Street Address"
+                            },
+                            "hs_timezone": {
+                                "type": "string",
+                                "description": "Time Zone",
+                                "enum": [
+                                    "pacific_slash_midway",
+                                    "pacific_slash_niue",
+                                    "pacific_slash_pago_pago",
+                                    "pacific_slash_samoa",
+                                    "us_slash_samoa",
+                                    "pacific_slash_honolulu",
+                                    "pacific_slash_johnston",
+                                    "pacific_slash_rarotonga",
+                                    "pacific_slash_tahiti",
+                                    "us_slash_hawaii",
+                                    "pacific_slash_marquesas",
+                                    "america_slash_adak",
+                                    "america_slash_atka",
+                                    "pacific_slash_gambier",
+                                    "us_slash_aleutian",
+                                    "america_slash_anchorage",
+                                    "america_slash_juneau",
+                                    "america_slash_metlakatla",
+                                    "america_slash_nome",
+                                    "america_slash_sitka",
+                                    "america_slash_yakutat",
+                                    "pacific_slash_pitcairn",
+                                    "us_slash_alaska",
+                                    "america_slash_creston",
+                                    "america_slash_dawson",
+                                    "america_slash_dawson_creek",
+                                    "america_slash_ensenada",
+                                    "america_slash_fort_nelson",
+                                    "america_slash_hermosillo",
+                                    "america_slash_los_angeles",
+                                    "america_slash_phoenix",
+                                    "america_slash_santa_isabel",
+                                    "america_slash_tijuana",
+                                    "america_slash_vancouver",
+                                    "america_slash_whitehorse",
+                                    "canada_slash_pacific",
+                                    "canada_slash_yukon",
+                                    "mexico_slash_bajanorte",
+                                    "us_slash_arizona",
+                                    "us_slash_pacific",
+                                    "us_slash_pacific_hyphen_new",
+                                    "america_slash_belize",
+                                    "america_slash_boise",
+                                    "america_slash_cambridge_bay",
+                                    "america_slash_chihuahua",
+                                    "america_slash_costa_rica",
+                                    "america_slash_denver",
+                                    "america_slash_edmonton",
+                                    "america_slash_el_salvador",
+                                    "america_slash_guatemala",
+                                    "america_slash_inuvik",
+                                    "america_slash_managua",
+                                    "america_slash_mazatlan",
+                                    "navajo",
+                                    "america_slash_ojinaga",
+                                    "america_slash_regina",
+                                    "america_slash_shiprock",
+                                    "america_slash_swift_current",
+                                    "america_slash_tegucigalpa",
+                                    "america_slash_yellowknife",
+                                    "canada_slash_mountain",
+                                    "canada_slash_saskatchewan",
+                                    "chile_slash_easterisland",
+                                    "mexico_slash_bajasur",
+                                    "pacific_slash_easter",
+                                    "pacific_slash_galapagos",
+                                    "us_slash_mountain",
+                                    "america_slash_atikokan",
+                                    "america_slash_bahia_banderas",
+                                    "america_slash_bogota",
+                                    "america_slash_cancun",
+                                    "america_slash_cayman",
+                                    "america_slash_chicago",
+                                    "america_slash_coral_harbour",
+                                    "america_slash_eirunepe",
+                                    "america_slash_guayaquil",
+                                    "america_slash_indiana_slash_knox",
+                                    "america_slash_indiana_slash_tell_city",
+                                    "america_slash_jamaica",
+                                    "america_slash_knox_in",
+                                    "america_slash_lima",
+                                    "america_slash_matamoros",
+                                    "america_slash_menominee",
+                                    "america_slash_merida",
+                                    "america_slash_mexico_city",
+                                    "america_slash_monterrey",
+                                    "america_slash_north_dakota_slash_beulah",
+                                    "america_slash_north_dakota_slash_center",
+                                    "america_slash_north_dakota_slash_new_salem",
+                                    "america_slash_panama",
+                                    "america_slash_porto_acre",
+                                    "america_slash_rainy_river",
+                                    "america_slash_rankin_inlet",
+                                    "america_slash_resolute",
+                                    "america_slash_rio_branco",
+                                    "america_slash_winnipeg",
+                                    "brazil_slash_acre",
+                                    "canada_slash_central",
+                                    "mexico_slash_general",
+                                    "us_slash_central",
+                                    "us_slash_indiana_hyphen_starke",
+                                    "america_slash_anguilla",
+                                    "america_slash_antigua",
+                                    "america_slash_aruba",
+                                    "america_slash_asuncion",
+                                    "america_slash_barbados",
+                                    "america_slash_blanc_hyphen_sablon",
+                                    "america_slash_boa_vista",
+                                    "america_slash_campo_grande",
+                                    "america_slash_caracas",
+                                    "cuba",
+                                    "america_slash_cuiaba",
+                                    "america_slash_curacao",
+                                    "america_slash_detroit",
+                                    "america_slash_dominica",
+                                    "america_slash_fort_wayne",
+                                    "america_slash_grand_turk",
+                                    "america_slash_grenada",
+                                    "america_slash_guadeloupe",
+                                    "america_slash_guyana",
+                                    "america_slash_havana",
+                                    "america_slash_indiana_slash_indianapolis",
+                                    "america_slash_indiana_slash_marengo",
+                                    "america_slash_indiana_slash_petersburg",
+                                    "america_slash_indiana_slash_vevay",
+                                    "america_slash_indiana_slash_vincennes",
+                                    "america_slash_indiana_slash_winamac",
+                                    "america_slash_indianapolis",
+                                    "america_slash_iqaluit",
+                                    "america_slash_kentucky_slash_louisville",
+                                    "america_slash_kentucky_slash_monticello",
+                                    "america_slash_kralendijk",
+                                    "america_slash_la_paz",
+                                    "america_slash_louisville",
+                                    "america_slash_lower_princes",
+                                    "america_slash_manaus",
+                                    "america_slash_marigot",
+                                    "america_slash_martinique",
+                                    "america_slash_montreal",
+                                    "america_slash_montserrat",
+                                    "america_slash_nassau",
+                                    "america_slash_new_york",
+                                    "america_slash_nipigon",
+                                    "america_slash_pangnirtung",
+                                    "america_slash_port_of_spain",
+                                    "america_slash_port_hyphen_au_hyphen_prince",
+                                    "america_slash_porto_velho",
+                                    "america_slash_puerto_rico",
+                                    "america_slash_santiago",
+                                    "america_slash_santo_domingo",
+                                    "america_slash_st_barthelemy",
+                                    "america_slash_st_kitts",
+                                    "america_slash_st_lucia",
+                                    "america_slash_st_thomas",
+                                    "america_slash_st_vincent",
+                                    "america_slash_thunder_bay",
+                                    "america_slash_toronto",
+                                    "america_slash_tortola",
+                                    "america_slash_virgin",
+                                    "brazil_slash_west",
+                                    "canada_slash_eastern",
+                                    "chile_slash_continental",
+                                    "us_slash_east_hyphen_indiana",
+                                    "us_slash_eastern",
+                                    "us_slash_michigan",
+                                    "america_slash_araguaina",
+                                    "america_slash_argentina_slash_buenos_aires",
+                                    "america_slash_argentina_slash_catamarca",
+                                    "america_slash_argentina_slash_comodrivadavia",
+                                    "america_slash_argentina_slash_cordoba",
+                                    "america_slash_argentina_slash_jujuy",
+                                    "america_slash_argentina_slash_la_rioja",
+                                    "america_slash_argentina_slash_mendoza",
+                                    "america_slash_argentina_slash_rio_gallegos",
+                                    "america_slash_argentina_slash_salta",
+                                    "america_slash_argentina_slash_san_juan",
+                                    "america_slash_argentina_slash_san_luis",
+                                    "america_slash_argentina_slash_tucuman",
+                                    "america_slash_argentina_slash_ushuaia",
+                                    "america_slash_bahia",
+                                    "america_slash_belem",
+                                    "america_slash_buenos_aires",
+                                    "america_slash_catamarca",
+                                    "america_slash_cayenne",
+                                    "america_slash_cordoba",
+                                    "america_slash_fortaleza",
+                                    "america_slash_glace_bay",
+                                    "america_slash_goose_bay",
+                                    "america_slash_halifax",
+                                    "america_slash_jujuy",
+                                    "america_slash_maceio",
+                                    "america_slash_mendoza",
+                                    "america_slash_moncton",
+                                    "america_slash_montevideo",
+                                    "america_slash_paramaribo",
+                                    "america_slash_punta_arenas",
+                                    "america_slash_recife",
+                                    "america_slash_rosario",
+                                    "america_slash_santarem",
+                                    "america_slash_sao_paulo",
+                                    "america_slash_thule",
+                                    "antarctica_slash_palmer",
+                                    "antarctica_slash_rothera",
+                                    "atlantic_slash_bermuda",
+                                    "atlantic_slash_stanley",
+                                    "brazil_slash_east",
+                                    "canada_slash_atlantic",
+                                    "america_slash_st_johns",
+                                    "canada_slash_newfoundland",
+                                    "america_slash_godthab",
+                                    "america_slash_miquelon",
+                                    "america_slash_noronha",
+                                    "atlantic_slash_south_georgia",
+                                    "brazil_slash_denoronha",
+                                    "atlantic_slash_cape_verde",
+                                    "africa_slash_abidjan",
+                                    "africa_slash_accra",
+                                    "africa_slash_bamako",
+                                    "africa_slash_banjul",
+                                    "africa_slash_bissau",
+                                    "africa_slash_conakry",
+                                    "africa_slash_dakar",
+                                    "africa_slash_freetown",
+                                    "africa_slash_lome",
+                                    "africa_slash_monrovia",
+                                    "africa_slash_nouakchott",
+                                    "africa_slash_ouagadougou",
+                                    "africa_slash_timbuktu",
+                                    "america_slash_danmarkshavn",
+                                    "america_slash_scoresbysund",
+                                    "atlantic_slash_azores",
+                                    "atlantic_slash_reykjavik",
+                                    "atlantic_slash_st_helena",
+                                    "iceland",
+                                    "africa_slash_algiers",
+                                    "africa_slash_bangui",
+                                    "africa_slash_brazzaville",
+                                    "africa_slash_casablanca",
+                                    "africa_slash_douala",
+                                    "africa_slash_el_aaiun",
+                                    "africa_slash_kinshasa",
+                                    "africa_slash_lagos",
+                                    "africa_slash_libreville",
+                                    "africa_slash_luanda",
+                                    "africa_slash_malabo",
+                                    "africa_slash_ndjamena",
+                                    "africa_slash_niamey",
+                                    "africa_slash_porto_hyphen_novo",
+                                    "africa_slash_sao_tome",
+                                    "africa_slash_tunis",
+                                    "atlantic_slash_canary",
+                                    "atlantic_slash_faeroe",
+                                    "atlantic_slash_faroe",
+                                    "atlantic_slash_madeira",
+                                    "europe_slash_belfast",
+                                    "europe_slash_dublin",
+                                    "eire",
+                                    "europe_slash_guernsey",
+                                    "europe_slash_isle_of_man",
+                                    "europe_slash_jersey",
+                                    "europe_slash_lisbon",
+                                    "europe_slash_london",
+                                    "portugal",
+                                    "africa_slash_blantyre",
+                                    "africa_slash_bujumbura",
+                                    "africa_slash_cairo",
+                                    "africa_slash_ceuta",
+                                    "egypt",
+                                    "africa_slash_gaborone",
+                                    "africa_slash_harare",
+                                    "africa_slash_johannesburg",
+                                    "africa_slash_khartoum",
+                                    "africa_slash_kigali",
+                                    "libya",
+                                    "africa_slash_lubumbashi",
+                                    "africa_slash_lusaka",
+                                    "africa_slash_maputo",
+                                    "africa_slash_maseru",
+                                    "africa_slash_mbabane",
+                                    "africa_slash_tripoli",
+                                    "africa_slash_windhoek",
+                                    "antarctica_slash_troll",
+                                    "arctic_slash_longyearbyen",
+                                    "atlantic_slash_jan_mayen",
+                                    "europe_slash_amsterdam",
+                                    "europe_slash_andorra",
+                                    "europe_slash_belgrade",
+                                    "europe_slash_berlin",
+                                    "europe_slash_bratislava",
+                                    "europe_slash_brussels",
+                                    "europe_slash_budapest",
+                                    "europe_slash_busingen",
+                                    "europe_slash_copenhagen",
+                                    "europe_slash_gibraltar",
+                                    "europe_slash_kaliningrad",
+                                    "europe_slash_ljubljana",
+                                    "europe_slash_luxembourg",
+                                    "europe_slash_madrid",
+                                    "europe_slash_malta",
+                                    "europe_slash_monaco",
+                                    "europe_slash_oslo",
+                                    "europe_slash_paris",
+                                    "europe_slash_podgorica",
+                                    "poland",
+                                    "europe_slash_prague",
+                                    "europe_slash_rome",
+                                    "europe_slash_san_marino",
+                                    "europe_slash_sarajevo",
+                                    "europe_slash_skopje",
+                                    "europe_slash_stockholm",
+                                    "europe_slash_tirane",
+                                    "europe_slash_vaduz",
+                                    "europe_slash_vatican",
+                                    "europe_slash_vienna",
+                                    "europe_slash_warsaw",
+                                    "europe_slash_zagreb",
+                                    "europe_slash_zurich",
+                                    "africa_slash_addis_ababa",
+                                    "africa_slash_asmara",
+                                    "africa_slash_asmera",
+                                    "africa_slash_dar_es_salaam",
+                                    "africa_slash_djibouti",
+                                    "africa_slash_juba",
+                                    "africa_slash_kampala",
+                                    "africa_slash_mogadishu",
+                                    "africa_slash_nairobi",
+                                    "antarctica_slash_syowa",
+                                    "asia_slash_aden",
+                                    "asia_slash_amman",
+                                    "asia_slash_baghdad",
+                                    "asia_slash_bahrain",
+                                    "asia_slash_beirut",
+                                    "asia_slash_damascus",
+                                    "asia_slash_famagusta",
+                                    "asia_slash_gaza",
+                                    "asia_slash_hebron",
+                                    "israel",
+                                    "asia_slash_istanbul",
+                                    "asia_slash_jerusalem",
+                                    "asia_slash_kuwait",
+                                    "asia_slash_nicosia",
+                                    "asia_slash_qatar",
+                                    "asia_slash_riyadh",
+                                    "asia_slash_tel_aviv",
+                                    "turkey",
+                                    "europe_slash_athens",
+                                    "europe_slash_bucharest",
+                                    "europe_slash_chisinau",
+                                    "europe_slash_helsinki",
+                                    "europe_slash_istanbul",
+                                    "europe_slash_kiev",
+                                    "europe_slash_kirov",
+                                    "europe_slash_mariehamn",
+                                    "europe_slash_minsk",
+                                    "europe_slash_moscow",
+                                    "europe_slash_nicosia",
+                                    "europe_slash_riga",
+                                    "europe_slash_simferopol",
+                                    "europe_slash_sofia",
+                                    "europe_slash_tallinn",
+                                    "europe_slash_tiraspol",
+                                    "europe_slash_uzhgorod",
+                                    "europe_slash_vilnius",
+                                    "europe_slash_zaporozhye",
+                                    "indian_slash_antananarivo",
+                                    "indian_slash_comoro",
+                                    "indian_slash_mayotte",
+                                    "asia_slash_baku",
+                                    "asia_slash_dubai",
+                                    "asia_slash_muscat",
+                                    "asia_slash_tbilisi",
+                                    "asia_slash_yerevan",
+                                    "europe_slash_astrakhan",
+                                    "europe_slash_samara",
+                                    "europe_slash_saratov",
+                                    "europe_slash_ulyanovsk",
+                                    "europe_slash_volgograd",
+                                    "indian_slash_mahe",
+                                    "indian_slash_mauritius",
+                                    "indian_slash_reunion",
+                                    "iran",
+                                    "asia_slash_kabul",
+                                    "asia_slash_tehran",
+                                    "antarctica_slash_mawson",
+                                    "asia_slash_aqtau",
+                                    "asia_slash_aqtobe",
+                                    "asia_slash_ashgabat",
+                                    "asia_slash_ashkhabad",
+                                    "asia_slash_atyrau",
+                                    "asia_slash_dushanbe",
+                                    "asia_slash_karachi",
+                                    "asia_slash_oral",
+                                    "asia_slash_samarkand",
+                                    "asia_slash_tashkent",
+                                    "asia_slash_yekaterinburg",
+                                    "indian_slash_kerguelen",
+                                    "indian_slash_maldives",
+                                    "asia_slash_calcutta",
+                                    "asia_slash_colombo",
+                                    "asia_slash_kolkata",
+                                    "asia_slash_kathmandu",
+                                    "asia_slash_katmandu",
+                                    "antarctica_slash_vostok",
+                                    "asia_slash_almaty",
+                                    "asia_slash_bishkek",
+                                    "asia_slash_dacca",
+                                    "asia_slash_dhaka",
+                                    "asia_slash_kashgar",
+                                    "asia_slash_omsk",
+                                    "asia_slash_qyzylorda",
+                                    "asia_slash_thimbu",
+                                    "asia_slash_thimphu",
+                                    "asia_slash_urumqi",
+                                    "indian_slash_chagos",
+                                    "asia_slash_rangoon",
+                                    "asia_slash_yangon",
+                                    "indian_slash_cocos",
+                                    "antarctica_slash_davis",
+                                    "asia_slash_bangkok",
+                                    "asia_slash_barnaul",
+                                    "asia_slash_ho_chi_minh",
+                                    "asia_slash_hovd",
+                                    "asia_slash_jakarta",
+                                    "asia_slash_krasnoyarsk",
+                                    "asia_slash_novokuznetsk",
+                                    "asia_slash_novosibirsk",
+                                    "asia_slash_phnom_penh",
+                                    "asia_slash_pontianak",
+                                    "asia_slash_saigon",
+                                    "asia_slash_tomsk",
+                                    "asia_slash_vientiane",
+                                    "indian_slash_christmas",
+                                    "antarctica_slash_casey",
+                                    "asia_slash_brunei",
+                                    "asia_slash_choibalsan",
+                                    "asia_slash_chongqing",
+                                    "asia_slash_chungking",
+                                    "asia_slash_harbin",
+                                    "asia_slash_hong_kong",
+                                    "asia_slash_irkutsk",
+                                    "asia_slash_kuala_lumpur",
+                                    "asia_slash_kuching",
+                                    "asia_slash_macao",
+                                    "asia_slash_macau",
+                                    "asia_slash_makassar",
+                                    "asia_slash_manila",
+                                    "asia_slash_shanghai",
+                                    "asia_slash_singapore",
+                                    "asia_slash_taipei",
+                                    "asia_slash_ujung_pandang",
+                                    "asia_slash_ulaanbaatar",
+                                    "asia_slash_ulan_bator",
+                                    "australia_slash_perth",
+                                    "australia_slash_west",
+                                    "australia_slash_eucla",
+                                    "asia_slash_chita",
+                                    "asia_slash_dili",
+                                    "japan",
+                                    "asia_slash_jayapura",
+                                    "asia_slash_khandyga",
+                                    "asia_slash_pyongyang",
+                                    "asia_slash_seoul",
+                                    "asia_slash_tokyo",
+                                    "asia_slash_yakutsk",
+                                    "pacific_slash_palau",
+                                    "australia_slash_adelaide",
+                                    "australia_slash_broken_hill",
+                                    "australia_slash_darwin",
+                                    "australia_slash_north",
+                                    "australia_slash_south",
+                                    "australia_slash_yancowinna",
+                                    "antarctica_slash_dumontdurville",
+                                    "asia_slash_ust_hyphen_nera",
+                                    "asia_slash_vladivostok",
+                                    "australia_slash_act",
+                                    "australia_slash_brisbane",
+                                    "australia_slash_canberra",
+                                    "australia_slash_currie",
+                                    "australia_slash_hobart",
+                                    "australia_slash_lindeman",
+                                    "australia_slash_melbourne",
+                                    "australia_slash_nsw",
+                                    "australia_slash_queensland",
+                                    "australia_slash_sydney",
+                                    "australia_slash_tasmania",
+                                    "australia_slash_victoria",
+                                    "pacific_slash_chuuk",
+                                    "pacific_slash_guam",
+                                    "pacific_slash_port_moresby",
+                                    "pacific_slash_saipan",
+                                    "pacific_slash_truk",
+                                    "pacific_slash_yap",
+                                    "australia_slash_lhi",
+                                    "australia_slash_lord_howe",
+                                    "antarctica_slash_macquarie",
+                                    "asia_slash_magadan",
+                                    "asia_slash_sakhalin",
+                                    "asia_slash_srednekolymsk",
+                                    "pacific_slash_bougainville",
+                                    "pacific_slash_efate",
+                                    "pacific_slash_guadalcanal",
+                                    "pacific_slash_kosrae",
+                                    "pacific_slash_norfolk",
+                                    "pacific_slash_noumea",
+                                    "pacific_slash_pohnpei",
+                                    "pacific_slash_ponape",
+                                    "antarctica_slash_mcmurdo",
+                                    "antarctica_slash_south_pole",
+                                    "asia_slash_anadyr",
+                                    "asia_slash_kamchatka",
+                                    "pacific_slash_auckland",
+                                    "pacific_slash_fiji",
+                                    "pacific_slash_funafuti",
+                                    "kwajalein",
+                                    "pacific_slash_majuro",
+                                    "pacific_slash_nauru",
+                                    "pacific_slash_tarawa",
+                                    "pacific_slash_wake",
+                                    "pacific_slash_wallis",
+                                    "pacific_slash_chatham",
+                                    "pacific_slash_apia",
+                                    "pacific_slash_enderbury",
+                                    "pacific_slash_fakaofo",
+                                    "pacific_slash_tongatapu",
+                                    "pacific_slash_kiritimati"
+                                ]
+                            },
+                            "hs_time_between_contact_creation_and_deal_close": {
+                                "type": "number",
+                                "description": "Time between contact creation and deal close"
+                            },
+                            "hs_time_between_contact_creation_and_deal_creation": {
+                                "type": "number",
+                                "description": "Time between contact creation and deal creation"
+                            },
+                            "hs_time_to_move_from_lead_to_customer": {
+                                "type": "number",
+                                "description": "Time to move from lead to customer"
+                            },
+                            "hs_time_to_move_from_marketingqualifiedlead_to_customer": {
+                                "type": "number",
+                                "description": "Time to move from marketing qualified lead to customer"
+                            },
+                            "hs_time_to_move_from_opportunity_to_customer": {
+                                "type": "number",
+                                "description": "Time to move from opportunity to customer"
+                            },
+                            "hs_time_to_move_from_salesqualifiedlead_to_customer": {
+                                "type": "number",
+                                "description": "Time to move from sales qualified lead to customer"
+                            },
+                            "hs_time_to_move_from_subscriber_to_customer": {
+                                "type": "number",
+                                "description": "Time to move from subscriber to customer"
+                            },
+                            "twitterbio": {
+                                "type": "string",
+                                "description": "Twitter Bio"
+                            },
+                            "hs_twitterid": {
+                                "type": "string",
+                                "description": "Twitter ID"
+                            },
+                            "twitterprofilephoto": {
+                                "type": "string",
+                                "description": "Twitter Profile Photo"
+                            },
+                            "twitterhandle": {
+                                "type": "string",
+                                "description": "Twitter Username"
+                            },
+                            "website": {
+                                "type": "string",
+                                "description": "Website URL"
+                            },
+                            "hs_whatsapp_phone_number": {
+                                "type": "string",
+                                "description": "WhatsApp Phone Number"
+                            },
+                            "work_email": {
+                                "type": "string",
+                                "description": "Work email"
+                            },
+                            "hs_googleplusid": {
+                                "type": "string",
+                                "description": "googleplus ID"
+                            }
+                        },
+                        "required": [
+                            "email"
+                        ],
+                        "additionalProperties": false
+                    }
+                }
+            },{
+                "type": "function",
+                "function": {
+                    "name": "HUBSPOT_GET_RECORDS_ANY",
+                    "description": "Triggered when a user wants to Get Any an unknown object typein Hubspot",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "recordType": {
+                                "type": "string",
+                                "description": "Record Type"
+                            },
+                            "paginationParameters": {
+                                "type": "object",
+                                "description": "Pagination parameters for paginated results",
+                                "properties": {
+                                    "pageCursor": {
+                                        "type": "string",
+                                        "description": "The cursor indicating the current page"
+                                    }
+                                },
+                                "required": [],
+                                "additionalProperties": false
+                            }
+                        },
+                        "required": [
+                            "recordType"
+                        ],
+                        "additionalProperties": false
+                    }
+                }
+            },{
+                "type": "function",
+                "function": {
+                    "name": "HUBSPOT_SEARCH_RECORDS_CONTACTS",
+                    "description": "Triggered when a user wants to Search contacts in Hubspot",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "filterFormula": {
+                                "type": "string",
+                                "description": "Filter search : Search for Records that match specified filters. (example: \"field\")"
+                            },
+                            "paginationParameters": {
+                                "type": "object",
+                                "description": "Pagination parameters for paginated results",
+                                "properties": {
+                                    "pageCursor": {
+                                        "type": "string",
+                                        "description": "The cursor indicating the current page"
+                                    }
+                                },
+                                "required": [],
+                                "additionalProperties": false
+                            }
+                        },
+                        "required": [],
+                        "additionalProperties": false
+                    }
+                }
+            }
+        ],"slack": [
+            {
+                "type": "function",
+                "function": {
+                    "name": "SLACK_LIST_MEMBERS",
+                    "description": "Triggered when a user wants to get all members",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {},
+                        "required": [],
+                        "additionalProperties": false
+                    }
+                }
+            },{
+                "type": "function",
+                "function": {
+                    "name": "SLACK_SEND_DIRECT_MESSAGE",
+                    "description": "Triggered when a user wants to send direct message",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "memberId": {
+                                "type": "string",
+                                "description": "Recipient : Use Connect Portal Workflow Settings to allow users to select a workspace member to DM. Defaults to the authenticated user if not provided. (example: \"{{settings.WorkspaceMember}}\")"
+                            },
+                            "message": {
+                                "type": "string",
+                                "description": "Message"
+                            },
+                            "botName": {
+                                "type": "string",
+                                "description": "Bot name : The name of the bot that sends this message."
+                            },
+                            "botIcon": {
+                                "type": "string",
+                                "description": "Bot icon : Can be either an image URL or an emoji available to your team (e.g. :dog:)"
+                            },
+                            "blocks": {
+                                "type": "object",
+                                "description": "Block kit JSON (example: \"[\n{\n\"text\": \"I am a test message\",\n\"attachments\": [\n  {\n    \"text\": \"And here\u2019s an attachment!\"\n  }\n]\n}\n]\")"
+                            },
+                            "authenticatedUser": {
+                                "type": "boolean",
+                                "description": "Send as authenticated user : If set to true, this message will appear to come from your authenticated Slack user instead of your application. Defaults to false."
+                            }
+                        },
+                        "required": [
+                            "memberId",
+                            "message",
+                            "botName",
+                            "botIcon"
+                        ],
+                        "additionalProperties": false
+                    }
+                }
+            },{
+                "type": "function",
+                "function": {
+                    "name": "SLACK_SEARCH_MESSAGES",
+                    "description": "Triggered when a user wants to search messages",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "query": {
+                                "type": "string",
+                                "description": "Search Query : Search for messages that match specified Slack search query."
+                            }
+                        },
+                        "required": [
+                            "query"
+                        ],
+                        "additionalProperties": false
+                    }
+                }
+            },{
+                "type": "function",
+                "function": {
+                    "name": "SLACK_GET_USER_BY_EMAIL",
+                    "description": "Triggered when a user wants to Get User By Email",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "email": {
+                                "type": "string",
+                                "description": "Email : The email address of a user in the workspace."
+                            }
+                        },
+                        "required": [
+                            "email"
+                        ],
+                        "additionalProperties": false
+                    }
+                }
+            }
+        ],"gmail": [
+            {
+                "type": "function",
+                "function": {
+                    "name": "GMAIL_SEND_EMAIL",
+                    "description": "Send a email in Gmail",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "toRecipients": {
+                                "type": "object",
+                                "description": "To : Specify the recipients as either a single string or a JSON array. (example: \"[\n  \"recipient1@domain.com\",\n  \"recipient2@domain.com\"\n]\")"
+                            },
+                            "from": {
+                                "type": "string",
+                                "description": "From : Specify the email of the sender."
+                            },
+                            "subject": {
+                                "type": "string",
+                                "description": "Subject : Specify the subject of the message."
+                            },
+                            "messageContent": {
+                                "type": "string",
+                                "description": "Message Content : Specify the content of the email message as plain text or HTML."
+                            },
+                            "attachments": {
+                                "type": "string",
+                                "description": "Attachments : Accepts either a single file object or a JSON array of file objects (example: \"[{file object}, {file object}]\")"
+                            },
+                            "additionalHeaders": {
+                                "type": "object",
+                                "description": "Additional Headers : Specify any additional header fields here. (example: \"{\n  \"reply-to\": \"Sender Name <sender@domain.com>\",\n}\")"
+                            }
+                        },
+                        "required": [
+                            "toRecipients",
+                            "from",
+                            "subject",
+                            "messageContent"
+                        ],
+                        "additionalProperties": false
+                    }
+                }
+            },{
+                "type": "function",
+                "function": {
+                    "name": "GMAIL_SEARCH_FOR_EMAIL",
+                    "description": "Search for a email in Gmail",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "emailFilterFormula": {
+                                "type": "string",
+                                "description": "Search for email based on filter formula. For Example: var1:val1, var2 +val2"
+                            }
+                        },
+                        "required": [],
+                        "additionalProperties": false
+                    }
+                }
+            },{
+                "type": "function",
+                "function": {
+                    "name": "GMAIL_GET_EMAIL_BY_ID",
+                    "description": "Get a email by id in Gmail",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "userId": {
+                                "type": "string",
+                                "description": "User ID : Specify the user\u2019s email address. (example: \"user@domain.com\")"
+                            },
+                            "messageId": {
+                                "type": "string",
+                                "description": "Message ID : Specify the ID of the message to retrieve."
+                            }
+                        },
+                        "required": [
+                            "userId",
+                            "messageId"
+                        ],
+                        "additionalProperties": false
+                    }
+                }
+            }
+        ],"googledrive": [
+            {
+                "type": "function",
+                "function": {
+                    "name": "GOOGLE_DRIVE_GET_FILE_BY_ID",
+                    "description": "Get file by Id in Google Drive",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "fileId": {
+                                "type": "string",
+                                "description": "File ID : The ID of the file. (example: \"1PVW0QtmQv-829KNvV3DLbYL8WrpS4zhtPx2Ok\")"
+                            },
+                            "additionalFields": {
+                                "type": "object",
+                                "description": "Additional Fields (example: \"\n  {\n    \"supportsAllDrives\": true\n  }\")"
+                            },
+                            "includeFileContents": {
+                                "type": "boolean",
+                                "description": "Include File Contents"
+                            }
+                        },
+                        "required": [
+                            "fileId"
+                        ],
+                        "additionalProperties": false
+                    }
+                }
+            },{
+                "type": "function",
+                "function": {
+                    "name": "GOOGLE_DRIVE_LIST_FILES",
+                    "description": "List files in Google Drive",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "includeFolders": {
+                                "type": "boolean",
+                                "description": "Include Folders"
+                            },
+                            "parentId": {
+                                "type": "string",
+                                "description": "Folder : Use Connect Portal Workflow Settings to allow users to select which Folder to get files from. Defaults to the user\u2019s root folder if unspecified. (example: \"{{settings.folder}}\")"
+                            },
+                            "pageSize": {
+                                "type": "string",
+                                "description": "Page Size : Specify the number of files to include on a page. Accepts values from 1 to 1000. Defaults to 100 if unspecified. (example: \"100\")"
+                            },
+                            "includeSharedItems": {
+                                "type": "boolean",
+                                "description": "Include Shared Drive Items : Specify whether search results should include files in shared drives. Defaults to false."
+                            },
+                            "additionalFields": {
+                                "type": "object",
+                                "description": "Additional Fields : Specify any other fields that should be updated in JSON below. Use Connect Portal Workflow Settings to allow users to select which fields to update. (example: \"\n  {\n    \"supportsAllDrives\": true\n  }\")"
+                            }
+                        },
+                        "required": [
+                            "includeFolders"
+                        ],
+                        "additionalProperties": false
+                    }
+                }
+            }
+        ],"notion": [
+            {
+                "type": "function",
+                "function": {
+                    "name": "NOTION_CREATE_PAGE",
+                    "description": "Triggered when a user wants to create a page in Notion",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "parent": {
+                                "type": "object",
+                                "description": "Parent : The parent page or database where the new page is inserted, represented as a JSON object with a page_id or database_id key, and the corresponding ID. (example: \"{\n  \"database_id\":\"{{DATABASE_ID}}\"\n}\")"
+                            },
+                            "properties": {
+                                "type": "object",
+                                "description": "Properties : The values of the page\u2019s properties. If the parent is a database, then the schema must match the parent database\u2019s properties. If the parent is a page, then the only valid object key is title. (example: \"{\n  \"title\":[\n    {\n      \"text\":{\n        \"content\":\"My Page\"\n      }\n    }\n  ]\n}\")"
+                            },
+                            "children": {
+                                "type": "object",
+                                "description": "Children (example: \"[\n  {\n    \"object\":\"block\",\n    \"type\":\"heading_2\",\n    \"heading_2\":{\n      \"rich_text\":[\n        {\n          \"type\":\"text\",\n          \"text\":{\n            \"content\":\"Lacinato kale\"\n          }\n        }\n      ]\n    }\n  }\n]\")"
+                            },
+                            "cover": {
+                                "type": "object",
+                                "description": "Cover (example: \"{\n  \"external\":{\n    \"url\":\"https://upload.wikimedia.org/wikipedia/commons/6/62/Tuscankale.jpg\"\n  }\n}\")"
+                            },
+                            "icon": {
+                                "type": "object",
+                                "description": "Icon (example: \"{\n  \"emoji\":\"\ud83e\udd6c\"\n}\")"
+                            }
+                        },
+                        "required": [
+                            "parent",
+                            "properties",
+                            "icon"
+                        ],
+                        "additionalProperties": false
+                    }
+                }
+            },{
+                "type": "function",
+                "function": {
+                    "name": "NOTION_SEARCH_PAGES",
+                    "description": "Triggered when a user wants to search pages in Notion",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "searchByTitleFilterSearch": {
+                                "type": "object",
+                                "description": "Search pages",
+                                "properties": {
+                                    "query": {
+                                        "type": "string",
+                                        "description": "Search query"
+                                    },
+                                    "direction": {
+                                        "type": "string",
+                                        "description": "Sort direction"
+                                    },
+                                    "page_size": {
+                                        "type": "string",
+                                        "description": "Page size"
+                                    },
+                                    "filter.value": {
+                                        "type": "string",
+                                        "description": "Filter value"
+                                    }
+                                },
+                                "required": [],
+                                "additionalProperties": false
+                            }
+                        },
+                        "required": [],
+                        "additionalProperties": false
+                    }
+                }
+            },{
+                "type": "function",
+                "function": {
+                    "name": "NOTION_GET_PAGE_CONTENT",
+                    "description": "Triggered when a user wants to get a page content in Notion",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "blockId": {
+                                "type": "string",
+                                "description": "Page ID : Specify a Block or Page ID to receive all of its block\u2019s children in order. (example: \"59833787-2cf9-4fdf-8782-e53db20768a5\")"
+                            }
+                        },
+                        "required": [
+                            "blockId"
+                        ],
+                        "additionalProperties": false
+                    }
+                }
+            }
+        ]
+    }
+}
