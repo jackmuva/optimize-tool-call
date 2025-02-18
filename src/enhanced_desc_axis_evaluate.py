@@ -26,7 +26,7 @@ def completeJsonFormat(parseList:list, prefix: str) -> list:
                     .replace('"csv"', "'csv'").replace('other"s', "other's").replace('Here"s', "Here's").replace('here"s', "here's")\
                     .replace("'11c3VDnHiyDDvOqBGJZvvp02EdourQjTB'", '"11c3VDnHiyDDvOqBGJZvvp02EdourQjTB"')\
                     .replace("[n","[").replace("]n", "]").replace("{n", "{").replace("}n", "}").replace(",n", ",").replace('"[', '[').replace(']"', ']')\
-                    .replace('"["j', '"[\'j').replace('com"]"', 'com\']"')
+                    .replace('"["j', '"[\'j').replace('com"]"', 'com\']"').replace('"n', '"')
             new = re.sub(r' LIKE \"(.*?)\"', r" = '\1'", new)
             new = re.sub(r' CONTAINS \"(.*?)\"', r" = '\1'", new)
             new = re.sub(r'=\"(.*?)\"', r" = '\1'", new)
