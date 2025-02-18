@@ -51,7 +51,7 @@ def formatToolCalls(index: int, output_dict: dict, prefix: str) -> list:
     parsedToolNames = output_dict['tools'][index][1:len(output_dict['tools'][index]) - 1].replace("'","").split(",")
     parsedToolInputs = None
     parsedToolOutputs = None
-    if prefix == 'gpt':
+    if prefix == 'gpt' or prefix == 'o3-gpt':
         parsedToolOutputs = output_dict['tool_outputs'][index][2:len(output_dict['tool_outputs'][index]) - 2].replace("', '", "','").split("','")
         parsedToolInputs =  output_dict['tool_inputs'][index][2:len(output_dict['tool_inputs'][index]) - 2].replace("', '", "','").split("','")
     elif prefix == 'claude':
@@ -78,6 +78,13 @@ def formatToolCalls(index: int, output_dict: dict, prefix: str) -> list:
             parsedToolInputs.append("{}")
         if i >= len(parsedToolOutputs):
             parsedToolOutputs.append("{}")
+
+        try:
+            json.loads(parsedToolInputs[i])
+        except:
+            with open('./error.txt', 'w') as file:
+                file.write(parsedToolInputs[i])
+            print("ERROR")
 
         toolCall = ToolCall(name=toolName, description=description, input_parameters=json.loads(parsedToolInputs[i]), output=str(parsedToolOutputs[i]))
         res.append(toolCall)
@@ -114,5 +121,6 @@ def evaluateTestCases(prefix):
     with open(f"./results/{prefix}-llm-results.json", "w") as f:
          json.dump(evaluation.model_dump(), f)
 
+evaluateTestCases("o3-gpt")
 evaluateTestCases("gpt")
 evaluateTestCases("claude")

@@ -127,10 +127,14 @@ def runPrompt(test_dict, llm_graph, prefix):
         with open(f"./data/{prefix}-llm-cache.json", "w") as outfile: 
             json.dump(test_dict, outfile)
 
-gpt_llm = ChatOpenAI(model="gpt-4o")
-gpt_graph = createGraph(gpt_llm, tools)
-runPrompt(test_dict, gpt_graph, "gpt")
+# gpt_llm = ChatOpenAI(model="gpt-4o")
+# gpt_graph = createGraph(gpt_llm, tools)
+# runPrompt(test_dict, gpt_graph, "gpt")
+#
+# claude_llm = ChatAnthropic(model_name="claude-3-5-sonnet-20240620", timeout=None, stop=None)
+# claude_graph = createGraph(claude_llm, tools)
+# runPrompt(test_dict, claude_graph, "claude")
 
-claude_llm = ChatAnthropic(model_name="claude-3-5-sonnet-20240620", timeout=None, stop=None)
-claude_graph = createGraph(claude_llm, tools)
-runPrompt(test_dict, claude_graph, "claude")
+gpt_llm = ChatOpenAI(model="o3-mini")
+gpt_graph = createGraph(gpt_llm, tools)
+runPrompt(test_dict, gpt_graph, "o3-gpt")
