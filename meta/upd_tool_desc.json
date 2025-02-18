@@ -5,7 +5,8 @@
                 "type": "function",
                 "function": {
                     "name": "SALESFORCE_CREATE_RECORD_CONTACT",
-                    "description": "Triggered when a user wants to Create Contact in Salesforce",
+                    "description": "Triggered when a user wants to Create Contact in Salesforce 
+                                    Returns: an object with the created contact ID and whether the action was successful",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -335,14 +336,16 @@
             },{
                 "type": "function",
                 "function": {
-                    "name": "HUBSPOT_SEARCH_RECORDS_CONTACTS",
-                    "description": "Triggered when a user wants to Search contacts in Hubspot",
+                    "name": "SALESFORCE_SEARCH_RECORDS_CONTACT",
+                    "description": "Triggered when a user wants to Search Contact in Salesforce
+                                    Returns: an object with an array of contact records",
                     "parameters": {
                         "type": "object",
                         "properties": {
                             "filterFormula": {
                                 "type": "string",
-                                "description": "Filter search : Search for Records that match specified filters. (example: \"field\")"
+                                "description": "Filter search : Search for records that match specified filters.
+                                                Examples: email, title, description, FirstName, LastName, AccountId"
                             },
                             "paginationParameters": {
                                 "type": "object",
@@ -365,7 +368,11 @@
                 "type": "function",
                 "function": {
                     "name": "SALESFORCE_WRITE_SOQL_QUERY",
-                    "description": "Triggered when a user wants to write an SOQL query",
+                    "description": "Triggered when a user wants to write an SOQL query or wants to search for 
+                                    Salesforce objects in a structured way.
+                                    Example: What Salesforce contacts do I have with this email and phone 
+                                            What Salesforce accounts do I have with name x
+                                    Returns: an object with records for the queried Salesforce object",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -387,7 +394,8 @@
                 "type": "function",
                 "function": {
                     "name": "HUBSPOT_CREATE_RECORD_CONTACTS",
-                    "description": "Triggered when a user wants to Create contacts in Hubspot",
+                    "description": "Triggered when a user wants to Create contacts in Hubspot
+                                    Returns: a hubspot object with the created contact id and properties",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -1964,13 +1972,14 @@
                 "type": "function",
                 "function": {
                     "name": "HUBSPOT_SEARCH_RECORDS_CONTACTS",
-                    "description": "Triggered when a user wants to Search contacts in Hubspot",
+                    "description": "Triggered when a user wants to Search contacts in Hubspot
+                                    Returns: an array of contact records",
                     "parameters": {
                         "type": "object",
                         "properties": {
                             "filterFormula": {
                                 "type": "string",
-                                "description": "Filter search : Search for Records that match specified filters. (example: \"field\")"
+                                "description": "Filter search : Search for Records that match specified filters. (example: email, firstname, lastname, jobtitle, lifecyclestage)"
                             },
                             "paginationParameters": {
                                 "type": "object",
@@ -1995,7 +2004,8 @@
                 "type": "function",
                 "function": {
                     "name": "SLACK_LIST_MEMBERS",
-                    "description": "Triggered when a user wants to get all members",
+                    "description": "Triggered when a user wants to get all members
+                                    Returns: an array of users with their name and Slack ID",
                     "parameters": {
                         "type": "object",
                         "properties": {},
@@ -2007,7 +2017,8 @@
                 "type": "function",
                 "function": {
                     "name": "SLACK_SEND_DIRECT_MESSAGE",
-                    "description": "Triggered when a user wants to send direct message",
+                    "description": "Triggered when a user wants to send direct message
+                                    Returns: a confirmation \"ok\" with the message information",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -2055,7 +2066,7 @@
                         "properties": {
                             "query": {
                                 "type": "string",
-                                "description": "Search Query : Search for messages that match specified Slack search query."
+                                "description": "Search Query : Search for messages that match specified Slack search query. (default is a keyword search; use \"in:\" followed by a channel, group, or user ID to search within a channel, group, user; use \"from:\" followed by a user ID or botname to filter by sender)"
                             }
                         },
                         "required": [
@@ -2068,7 +2079,8 @@
                 "type": "function",
                 "function": {
                     "name": "SLACK_GET_USER_BY_EMAIL",
-                    "description": "Triggered when a user wants to Get User By Email",
+                    "description": "Triggered when a user wants to Get User By Email
+                                    Returns: a record with a Slack ID, name, and other profile information",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -2089,7 +2101,8 @@
                 "type": "function",
                 "function": {
                     "name": "GMAIL_SEND_EMAIL",
-                    "description": "Send a email in Gmail",
+                    "description": "Send a email in Gmail
+                                    Returns: the email ID and thread ID",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -2131,13 +2144,14 @@
                 "type": "function",
                 "function": {
                     "name": "GMAIL_SEARCH_FOR_EMAIL",
-                    "description": "Search for a email in Gmail",
+                    "description": "Search for a email in Gmail by keyword or by additional filters: email from, email to, date, label subject, etc.
+                                    Returns: an array of messages with message ID and thread ID",
                     "parameters": {
                         "type": "object",
                         "properties": {
                             "emailFilterFormula": {
                                 "type": "string",
-                                "description": "Search for email based on filter formula. For Example: var1:val1, var2 +val2"
+                                "description": "Search for email based on filter formula. For Example: var1:val1, var2 +val2. Additional filters include: from, to, date, label, subject, cc"
                             }
                         },
                         "required": [],
@@ -2148,7 +2162,8 @@
                 "type": "function",
                 "function": {
                     "name": "GMAIL_GET_EMAIL_BY_ID",
-                    "description": "Get a email by id in Gmail",
+                    "description": "Get a email by id in Gmail
+                                    Returns: a snippet of the email with attachements and additional data",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -2174,7 +2189,8 @@
                 "type": "function",
                 "function": {
                     "name": "GOOGLE_DRIVE_GET_FILE_BY_ID",
-                    "description": "Get file by Id in Google Drive",
+                    "description": "Get file by Id in Google Drive
+                                    Returns a file object with name, mimetype, and binary data if file contents are included and supports binary data download; non-binary files will require exporting",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -2201,7 +2217,8 @@
                 "type": "function",
                 "function": {
                     "name": "GOOGLE_DRIVE_LIST_FILES",
-                    "description": "List files in Google Drive",
+                    "description": "List files in Google Drive.
+                                    Returns: an array of file objects with mimeType, ID, name and other metadata",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -2238,7 +2255,8 @@
                 "type": "function",
                 "function": {
                     "name": "NOTION_CREATE_PAGE",
-                    "description": "Triggered when a user wants to create a page in Notion",
+                    "description": "Triggered when a user wants to create a page in Notion
+                                    Returns: a page object with the ID, URL and other metadata",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -2275,7 +2293,8 @@
                 "type": "function",
                 "function": {
                     "name": "NOTION_SEARCH_PAGES",
-                    "description": "Triggered when a user wants to search pages in Notion",
+                    "description": "Triggered when a user wants to search pages in Notion. 
+                                    Returns: an array of block objects with IDs and content",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -2285,11 +2304,11 @@
                                 "properties": {
                                     "query": {
                                         "type": "string",
-                                        "description": "Search query"
+                                        "description": "Search query for keyword search"
                                     },
                                     "direction": {
                                         "type": "string",
-                                        "description": "Sort direction"
+                                        "description": "Sort direction. Example: ascending, descending"
                                     },
                                     "page_size": {
                                         "type": "string",
@@ -2297,7 +2316,7 @@
                                     },
                                     "filter.value": {
                                         "type": "string",
-                                        "description": "Filter value"
+                                        "description": "Filter value. Options include: page, database"
                                     }
                                 },
                                 "required": [],
@@ -2312,7 +2331,8 @@
                 "type": "function",
                 "function": {
                     "name": "NOTION_GET_PAGE_CONTENT",
-                    "description": "Triggered when a user wants to get a page content in Notion",
+                    "description": "Triggered when a user wants to get a page content in Notion.
+                                    Returns: an array of block objects with block IDs and contents",
                     "parameters": {
                         "type": "object",
                         "properties": {
