@@ -59,3 +59,16 @@ def getTools():
                 toolbox.append(function)
 
     return toolbox
+
+def getEnhancedDescTools():
+    with open("./meta/upd_tool_desc.json", "r") as json_file:
+        allActions = json.load(json_file)
+    print("Integrations enabled: " + str(allActions['actions'].keys()))
+    toolbox = []
+
+    for integration, functions in allActions['actions'].items():
+        for function in functions:
+            toolbox.append(function)
+
+    return toolbox
+
