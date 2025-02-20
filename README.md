@@ -13,7 +13,7 @@ For each axis there is a script for:
 - Evaluating metrics - tool correctness and task completion - with DeepEval (`..._evaluate.py`)
 - Analyzing the results in a table by combining the test bank with the evaluation metrics, and then exporting the data to csv to analyze in Sheets, Excel, pandas, etc. (`..._analyze.py`)
 
-The `tool_select.py` script must be run first to call the ActionKit API that will retrieve the tool metadata
+The `tool_select.py` script calls the ActionKit API that will retrieve the tool metadata
 
 The `node_utils.py` file has some helper functions for our LangGraph architecture
 
