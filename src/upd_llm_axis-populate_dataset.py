@@ -1,14 +1,17 @@
 from dotenv import load_dotenv
 import pandas as pd
 from langgraph.graph import StateGraph, START, END
-from langchain_anthropic import ChatAnthropic
 from langchain_openai import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
 from tool_select import *
 from node_utils import *
 import time
 
 load_dotenv()
 
+test_df = pd.read_csv("./data/tool-based-test-cases.csv")
+test_dict = test_df.to_dict()
+tools = getTools()
 
 
 def createGraph(llm, tools):
@@ -70,7 +73,7 @@ def stream_claude_graph_updates(graph, user_input: str, sys_prompt:str = ""):
 
     return {"messages": messages, "calls": calls, "responses": responses, "inputs": inputs}
 
-def runPrompt(test_dict, llm, sys_prompt:str="", prompt_num:int=0, tool_dict:dict = {}):
+def runPrompt(test_dict, llm_graph, llm, sys_prompt:str="", prompt_num:int=0):
     test_dict['outputs'] = {}
     test_dict['tools'] = {}
     test_dict['tool_outputs'] = {}
@@ -79,7 +82,7 @@ def runPrompt(test_dict, llm, sys_prompt:str="", prompt_num:int=0, tool_dict:dic
 
     results_dict = {}
     try:
-        with open(f"./data/{llm}-num-tools-cache.json", 'r') as file:
+        with open(f"./data/{llm}-upd-llm-cache.json", 'r') as file:
             results_dict = json.load(file)
     except Exception as e:
         print(e)
@@ -97,23 +100,10 @@ def runPrompt(test_dict, llm, sys_prompt:str="", prompt_num:int=0, tool_dict:dic
             try:
                 print(f"System Prompt {prompt_num}")
                 print(f"{i} User: " + user_input)
-                tools = []
-                sourceSet = set()
-                for name in set(test_dict['tool_name'][i].split(",")):
-                    if name.split("_")[0] not in sourceSet and name.split("_")[0] in tool_dict:
-                        tools += tool_dict[name.split("_")[0]]
-                        sourceSet.add(name.split("_")[0])
                 if llm == 'claude':
-                    claude_llm = ChatAnthropic(model_name="claude-3-5-sonnet-20240620", timeout=None, stop=None)
-                    claude_graph = createGraph(claude_llm, tools)
-                    events = stream_claude_graph_updates(claude_graph, user_input, sys_prompt)
-                elif llm == 'o3-gpt':
-                    o3_llm = ChatOpenAI(model="o3-mini")
-                    o3_graph = createGraph(o3_llm, tools)
-                    events = stream_gpt_graph_updates(o3_graph, user_input, sys_prompt)
+                    events = stream_claude_graph_updates(llm_graph, user_input, sys_prompt)
                 else:
-                    print('gpt not supported yet')
-                    events = stream_gpt_graph_updates("placeholder", user_input, sys_prompt)
+                    events = stream_gpt_graph_updates(llm_graph, user_input, sys_prompt)
                 test_dict['outputs'][i] = events['messages']
                 test_dict['tools'][i] = events['calls']
                 test_dict['tool_outputs'][i] = events['responses']
@@ -133,7 +123,7 @@ def runPrompt(test_dict, llm, sys_prompt:str="", prompt_num:int=0, tool_dict:dic
                     test_dict['tool_inputs'][i] = ["ERROR"]
                     test_dict['error'][i] = str(e)
                     i += 1
-        with open(f"./data/{llm}-num-tools-cache.json", "w") as outfile: 
+        with open(f"./data/{llm}-upd-llm-cache.json", "w") as outfile: 
             json.dump(test_dict, outfile)
 
     try: 
@@ -141,43 +131,36 @@ def runPrompt(test_dict, llm, sys_prompt:str="", prompt_num:int=0, tool_dict:dic
         for i in test_dict:
             df_dict[i] = list(test_dict[i].values())
         populated_df = pd.DataFrame.from_dict(df_dict)
-        populated_df.to_csv(f'./data/{llm}-num-tool-axis-dataset.csv')
-        print(f'Sucessfully created {llm} with prompt {prompt_num} and agent routing dataset')
+        populated_df.to_csv(f'./data/{llm}-upd-llm-axis-dataset.csv')
+        print(f'Sucessfully created {llm} with prompt {prompt_num} dataset')
     except:
         print(f'Error creating {llm} dataset')
-        with open(f"./data/{llm}-num-tools-cache.json", "w") as outfile: 
+        with open(f"./data/{llm}-upd-llm-cache.json", "w") as outfile: 
             json.dump(test_dict, outfile)
 
-test_df = pd.read_csv("./data/tool-based-test-cases.csv")
-test_dict = test_df.to_dict()
-tools = getTools()
-tool_dict = {}
-for func in tools:
-    if func['function']['name'].split("_")[0] == 'SALESFORCE':
-        tool_dict['SALESFORCE'] = tool_dict.get('SALESFORCE', [])
-        tool_dict['SALESFORCE'].append(func)
-    elif func['function']['name'].split("_")[0] == 'HUBSPOT':
-        tool_dict['HUBSPOT'] = tool_dict.get('HUBSPOT', [])
-        tool_dict['HUBSPOT'].append(func)
-    elif func['function']['name'].split("_")[0] == 'NOTION':
-        tool_dict['NOTION'] = tool_dict.get('NOTION', [])
-        tool_dict['NOTION'].append(func)
-    elif func['function']['name'].split("_")[0] == 'GOOGLE':
-        tool_dict['GOOGLE'] = tool_dict.get('GOOGLE', [])
-        tool_dict['GOOGLE'].append(func)
-    elif func['function']['name'].split("_")[0] == 'SLACK':
-        tool_dict['SLACK'] = tool_dict.get('SLACK', [])
-        tool_dict['SLACK'].append(func)
-    elif func['function']['name'].split("_")[0] == 'GMAIL':
-        tool_dict['GMAIL'] = tool_dict.get('GMAIL', [])
-        tool_dict['GMAIL'].append(func)
+# claude_llm = ChatAnthropic(model_name="claude-3-5-sonnet-20240620", timeout=None, stop=None)
+# claude_graph = createGraph(claude_llm, tools)
 
+sys_prompt_0 = '''
+    You are a task assistant. Always attempt to use a tool. No need to ask clarifications and followups.
+'''
+sys_prompt_1 = '''
+    You are a task assistant. Always attempt to use a tool. No need to ask clarifications and followups.
+
+    Help users perform actions in 3rd-party applications. 
+    Users will ask to create records and search for records in CRMs like Salesforce and Hubspot. 
+    Users will also ask you to send messages/emails and search for messages/emails in messaging 
+    platforms like Slack and Gmail. Lastly, users will ask to search through pages and documents like 
+    in Google Drive and Notion. Use tools provided to help you with these tasks.
+    '''
 sys_prompt_2 = '''
-    You are a helpful assistant that helps users perform actions in 3rd-party applications. 
+    You are a task assistant. Always attempt to use a tool. No need to ask clarifications and followups.
+
+    Help users perform actions in 3rd-party applications. 
     Users will ask to create records and search for records in CRMs like Salesforce and Hubspot, 
     send and search messages in Gmail and Slack, and search for documents and pages in Notion and 
     Google Drive. Use tools provided to help you with these tasks.
-
+    
     Some Rules:
     * If a user mentions multiple data sources, use tools to search and/or take action across each data source.
     * If you use a tool that searches for information, but fails, try using a slightly different filter with your next best guess. For example, if a user asks to find Mistral.ai in Salesforce, but you can’t find it by using Name=Mistral.ai, then try searching with name=Mistral
@@ -185,4 +168,14 @@ sys_prompt_2 = '''
     if SALESFORCE_WRITE_SOQL_QUERY fails, try using SALESFORCE_SEARCH_RECORDS_CONTACT
     '''
 
-runPrompt(test_dict, "claude", sys_prompt_2, 2, tool_dict)
+o3_llm = ChatOpenAI(model="o3-mini")
+o3_graph = createGraph(o3_llm, tools)
+runPrompt(test_dict, o3_graph, "o3-gpt", sys_prompt_0, 0)
+
+gpt_llm = ChatOpenAI(model="gpt-4o")
+gpt_graph = createGraph(o3_llm, tools)
+runPrompt(test_dict, gpt_graph, "gpt-4o", sys_prompt_0, 0)
+
+claude_llm = ChatAnthropic(model_name="claude-3-5-sonnet-20240620", timeout=None, stop=None)
+claude_graph = createGraph(claude_llm, tools)
+runPrompt(test_dict, claude_graph, "claude_graph", sys_prompt_0, 0)
