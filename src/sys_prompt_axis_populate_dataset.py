@@ -138,8 +138,8 @@ def runPrompt(test_dict, llm_graph, llm, sys_prompt:str="", prompt_num:int=0):
         with open(f"./data/{llm}-sys-prompt-{prompt_num}-cache.json", "w") as outfile: 
             json.dump(test_dict, outfile)
 
-claude_llm = ChatAnthropic(model_name="claude-3-5-sonnet-20240620", timeout=None, stop=None)
-claude_graph = createGraph(claude_llm, tools)
+# claude_llm = ChatAnthropic(model_name="claude-3-5-sonnet-20240620", timeout=None, stop=None)
+# claude_graph = createGraph(claude_llm, tools)
 
 sys_prompt_1 = '''
     You are a helpful assistant that helps users perform actions in 3rd-party applications. 
@@ -161,5 +161,8 @@ sys_prompt_2 = '''
     if SALESFORCE_WRITE_SOQL_QUERY fails, try using SALESFORCE_SEARCH_RECORDS_CONTACT
     '''
 
-runPrompt(test_dict, claude_graph, "claude", sys_prompt_1, 1)
-runPrompt(test_dict, claude_graph, "claude", sys_prompt_2, 2)
+gpt_llm = ChatOpenAI(model="o3-mini")
+o3_graph = createGraph(gpt_llm, tools)
+
+runPrompt(test_dict, o3_graph, "o3-gpt", sys_prompt_1, 1)
+runPrompt(test_dict, o3_graph, "o3-gpt", sys_prompt_2, 2)

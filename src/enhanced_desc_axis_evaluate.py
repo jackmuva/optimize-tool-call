@@ -17,29 +17,29 @@ def completeJsonFormat(parseList:list, prefix: str) -> list:
                 res.append('{"error": "request too large"}')
             else:
                 res.append(new)
-    elif prefix == 'claude':
-        for s in parseList:
-            new = re.sub(r' = \"(.*?)\"', r" = '\1'", s).replace('"{', '{').replace('}"', '}').replace('\\"', "'")\
-                    .replace('True', '"True"').replace('False', '"False"').replace('="text/csv"', "='text/csv'").replace('\\', '')\
-                    .replace('I"m', "I'm").replace('I"d', "I'd").replace('you"d', "you'd").replace("{{settings.WorkspaceMember}}", '"{{settings.WorkspaceMember}}"')\
-                    .replace('you"re', "you're").replace('{{Your Gmail address}}', '"{{Your Gmail address}}"').replace('"11c3VDnHiyDDvOqBGJZvvp02EdourQjTB"', "'11c3VDnHiyDDvOqBGJZvvp02EdourQjTB'")\
-                    .replace('"csv"', "'csv'").replace('other"s', "other's").replace('Here"s', "Here's").replace('here"s', "here's")\
-                    .replace("'11c3VDnHiyDDvOqBGJZvvp02EdourQjTB'", '"11c3VDnHiyDDvOqBGJZvvp02EdourQjTB"')\
-                    .replace("[n","[").replace("]n", "]").replace("{n", "{").replace("}n", "}").replace(",n", ",").replace('"[', '[').replace(']"', ']')\
-                    .replace('"["j', '"[\'j').replace('com"]"', 'com\']"').replace('"n', '"')
-            new = re.sub(r' LIKE \"(.*?)\"', r" = '\1'", new)
-            new = re.sub(r' CONTAINS \"(.*?)\"', r" = '\1'", new)
-            new = re.sub(r'=\"(.*?)\"', r" = '\1'", new)
-            new = re.sub(r'!= \"(.*?)\"', r" = '\1'", new)
-            if s == 'ERROR' or s == '"ERROR"':
-                res.append('{"error": "request too large"}')
-            elif len(new) > 0 and new[0] == '[' and new[-1] == ']':
-                new = '{"results":' + new + "}"
-                res.append(new)
-            elif s == '' or not s:
-                res.append('{}')
-            else:
-                res.append(new)
+    # elif prefix == 'claude':
+    #     for s in parseList:
+    #         new = re.sub(r' = \"(.*?)\"', r" = '\1'", s).replace('"{', '{').replace('}"', '}').replace('\\"', "'")\
+    #                 .replace('True', '"True"').replace('False', '"False"').replace('="text/csv"', "='text/csv'").replace('\\', '')\
+    #                 .replace('I"m', "I'm").replace('I"d', "I'd").replace('you"d', "you'd").replace("{{settings.WorkspaceMember}}", '"{{settings.WorkspaceMember}}"')\
+    #                 .replace('you"re', "you're").replace('{{Your Gmail address}}', '"{{Your Gmail address}}"').replace('"11c3VDnHiyDDvOqBGJZvvp02EdourQjTB"', "'11c3VDnHiyDDvOqBGJZvvp02EdourQjTB'")\
+    #                 .replace('"csv"', "'csv'").replace('other"s', "other's").replace('Here"s', "Here's").replace('here"s', "here's")\
+    #                 .replace("'11c3VDnHiyDDvOqBGJZvvp02EdourQjTB'", '"11c3VDnHiyDDvOqBGJZvvp02EdourQjTB"')\
+    #                 .replace("[n","[").replace("]n", "]").replace("{n", "{").replace("}n", "}").replace(",n", ",").replace('"[', '[').replace(']"', ']')\
+    #                 .replace('"["j', '"[\'j').replace('com"]"', 'com\']"').replace('"n', '"')
+    #         new = re.sub(r' LIKE \"(.*?)\"', r" = '\1'", new)
+    #         new = re.sub(r' CONTAINS \"(.*?)\"', r" = '\1'", new)
+    #         new = re.sub(r'=\"(.*?)\"', r" = '\1'", new)
+    #         new = re.sub(r'!= \"(.*?)\"', r" = '\1'", new)
+    #         if s == 'ERROR' or s == '"ERROR"':
+    #             res.append('{"error": "request too large"}')
+    #         elif len(new) > 0 and new[0] == '[' and new[-1] == ']':
+    #             new = '{"results":' + new + "}"
+    #             res.append(new)
+    #         elif s == '' or not s:
+    #             res.append('{}')
+    #         else:
+    #             res.append(new)
 
     return res
 
@@ -56,7 +56,7 @@ def formatToolCalls(index: int, output_dict: dict, prefix: str) -> list:
     parsedToolNames = output_dict['tools'][index][1:len(output_dict['tools'][index]) - 1].replace("'","").split(",")
     parsedToolInputs = None
     parsedToolOutputs = None
-    if prefix == 'gpt':
+    if prefix == 'gpt' or prefix == 'o3-gpt':
         parsedToolOutputs = output_dict['tool_outputs'][index][2:len(output_dict['tool_outputs'][index]) - 2].replace("', '", "','").split("','")
         parsedToolInputs =  output_dict['tool_inputs'][index][2:len(output_dict['tool_inputs'][index]) - 2].replace("', '", "','").split("','")
     elif prefix == 'claude':

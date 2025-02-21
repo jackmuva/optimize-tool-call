@@ -52,13 +52,12 @@ def formatToolCalls(index: int, output_dict: dict, prefix: str) -> list:
     parsedToolNames = output_dict['tools'][index][1:len(output_dict['tools'][index]) - 1].replace("'","").split(",")
     parsedToolInputs = None
     parsedToolOutputs = None
-    if prefix == 'gpt':
+    if prefix == 'gpt' or prefix == 'o3-gpt':
         parsedToolOutputs = output_dict['tool_outputs'][index][2:len(output_dict['tool_outputs'][index]) - 2].replace("', '", "','").split("','")
         parsedToolInputs =  output_dict['tool_inputs'][index][2:len(output_dict['tool_inputs'][index]) - 2].replace("', '", "','").split("','")
     elif prefix == 'claude':
         parsedToolOutputs = output_dict['tool_outputs'][index][2:len(output_dict['tool_outputs'][index]) - 2].replace("'", '"').replace("},{", "}||{").replace('}", "{', "}||{").replace('}", "[', "}||[").split("||")
         parsedToolInputs =  output_dict['tool_inputs'][index][1:len(output_dict['tool_inputs'][index]) - 1].replace("'", '"').replace("},{", "}||{").replace("}, {", "}||{").split("||")
-
     if parsedToolInputs and parsedToolOutputs:
         parsedToolOutputs = completeJsonFormat(parsedToolOutputs, prefix) 
         parsedToolInputs = completeJsonFormat(parsedToolInputs, prefix) 
@@ -114,7 +113,9 @@ def evaluateTestCases(prefix, sys_prompt_num: int):
             expected_tools=formatExpectedToolCalls(index, output_dict)
         ) 
         test_cases.append(test_case)
-
+        break
+    print(test_cases)
+    return
     tool_correctness= ToolCorrectnessMetric(evaluation_params = [ToolCallParams.TOOL])
     task_completion = TaskCompletionMetric(model="gpt-4o-mini")
 
@@ -122,5 +123,5 @@ def evaluateTestCases(prefix, sys_prompt_num: int):
     with open(f"./results/{prefix}-sys-prompt-{sys_prompt_num}-results.json", "w") as f:
          json.dump(evaluation.model_dump(), f)
 
-#evaluateTestCases("claude", 1)
-evaluateTestCases("claude", 2)
+evaluateTestCases("o3-gpt", 1)
+evaluateTestCases("o3-gpt", 2)

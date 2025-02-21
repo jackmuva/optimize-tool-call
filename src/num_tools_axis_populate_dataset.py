@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 import pandas as pd
 from langgraph.graph import StateGraph, START, END
 from langchain_anthropic import ChatAnthropic
+from langchain_openai import ChatOpenAI
 from tool_select import *
 from node_utils import *
 import time
@@ -96,18 +97,22 @@ def runPrompt(test_dict, llm, sys_prompt:str="", prompt_num:int=0, tool_dict:dic
             try:
                 print(f"System Prompt {prompt_num}")
                 print(f"{i} User: " + user_input)
+                tools = []
+                sourceSet = set()
+                for name in set(test_dict['tool_name'][i].split(",")):
+                    if name.split("_")[0] not in sourceSet and name.split("_")[0] in tool_dict:
+                        tools += tool_dict[name.split("_")[0]]
+                        sourceSet.add(name.split("_")[0])
                 if llm == 'claude':
                     claude_llm = ChatAnthropic(model_name="claude-3-5-sonnet-20240620", timeout=None, stop=None)
-                    tools = []
-                    sourceSet = set()
-                    for name in set(test_dict['tool_name'][i].split(",")):
-                        if name.split("_")[0] not in sourceSet and name.split("_")[0] in tool_dict:
-                            tools += tool_dict[name.split("_")[0]]
-                            sourceSet.add(name.split("_")[0])
                     claude_graph = createGraph(claude_llm, tools)
                     events = stream_claude_graph_updates(claude_graph, user_input, sys_prompt)
+                elif llm == 'o3-gpt':
+                    o3_llm = ChatOpenAI(model="o3-mini")
+                    o3_graph = createGraph(o3_llm, tools)
+                    events = stream_gpt_graph_updates(o3_graph, user_input, sys_prompt)
                 else:
-                    print("gpt not supported yet")
+                    print('gpt not supported yet')
                     events = stream_gpt_graph_updates("placeholder", user_input, sys_prompt)
                 test_dict['outputs'][i] = events['messages']
                 test_dict['tools'][i] = events['calls']
@@ -180,4 +185,4 @@ sys_prompt_2 = '''
     if SALESFORCE_WRITE_SOQL_QUERY fails, try using SALESFORCE_SEARCH_RECORDS_CONTACT
     '''
 
-runPrompt(test_dict, "claude", sys_prompt_2, 2, tool_dict)
+runPrompt(test_dict, "claude", "", 0, tool_dict)

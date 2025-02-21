@@ -83,7 +83,7 @@ def create_results_table(results: list, labels: list) -> pd.DataFrame:
 with open('./results/claude-num-tools-results.json') as f:
     num_tools_dict = json.load(f)
 
-num_tools_data = pd.read_csv('./data/claude-num-tools-axis-dataset.csv').to_dict()
+num_tools_data = pd.read_csv('./data/claude-num-tool-axis-dataset.csv').to_dict()
 num_tools_res = clean_results(num_tools_dict, num_tools_data)
 results_table = create_results_table([num_tools_res], ['num_tools'])
-results_table.to_csv('./results/num-tools-comparison-table.csv')
+results_table.to_csv('./results/claude-num-tools-comparison-table.csv')
