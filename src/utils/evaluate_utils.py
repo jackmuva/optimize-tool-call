@@ -70,8 +70,8 @@ def formatToolCalls(index: int, output_dict: dict, prefix: str) -> list:
         parsedToolOutputs = output_dict['tool_outputs'][index][2:len(output_dict['tool_outputs'][index]) - 2].replace("', '", "','").split("','")
         parsedToolInputs =  output_dict['tool_inputs'][index][2:len(output_dict['tool_inputs'][index]) - 2].replace("', '", "','").split("','")
     elif 'claude' in prefix:
-        parsedToolOutputs = output_dict['tool_outputs'][index][2:len(output_dict['tool_outputs'][index]) - 2].replace("'", '"').replace("},{", "}||{").replace('}", "{', "}||{").replace('}", "[', "}||[").replace("}, {", "}||{").split("||")
-        parsedToolInputs =  output_dict['tool_inputs'][index][1:len(output_dict['tool_inputs'][index]) - 1].replace("'", '"').replace("},{", "}||{").replace('}", "{', "}||{").replace('}", "[', "}||[").split("||")
+        parsedToolOutputs = output_dict['tool_outputs'][index][2:len(output_dict['tool_outputs'][index]) - 2].replace("'", '"').replace("},{", "}||{").replace('}", "{', "}||{").replace('}", "[', "}||[").replace("}, {", "}||{").replace("}', '{", "}||{").split("||")
+        parsedToolInputs =  output_dict['tool_inputs'][index][1:len(output_dict['tool_inputs'][index]) - 1].replace("'", '"').replace("},{", "}||{").replace('}", "{', "}||{").replace('}", "[', "}||[").replace("}, {", "}||{").replace("}', '{", "}||{").split("||")
     if parsedToolInputs and parsedToolOutputs:
         formattedToolOutputs = completeJsonFormat(parsedToolOutputs, output_dict, index) 
         formattedToolInputs = completeJsonFormat(parsedToolInputs, output_dict, index) 

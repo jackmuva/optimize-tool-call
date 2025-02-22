@@ -175,8 +175,12 @@ def runPromptWithRouting(test_dict, llm, sys_prompt:str="", prompt_num:int=0, to
                     o3_llm = ChatOpenAI(model="o3-mini")
                     o3_graph = createGraph(o3_llm, tools)
                     events = stream_gpt_graph_updates(o3_graph, user_input, sys_prompt)
+                elif llm == 'gpt-4o':
+                    gpt_llm = ChatOpenAI(model="gpt-4o")
+                    gpt_graph = createGraph(gpt_llm, tools)
+                    events = stream_gpt_graph_updates(gpt_graph, user_input, sys_prompt)
                 else:
-                    print("gpt not supported yet")
+                    print("model not supported yet")
                     events = stream_gpt_graph_updates("placeholder", user_input, sys_prompt)
                 test_dict['outputs'][i] = events['messages']
                 test_dict['tools'][i] = events['calls']
