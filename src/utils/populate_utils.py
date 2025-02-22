@@ -4,7 +4,7 @@ from langgraph.graph import StateGraph, START, END
 from langchain_anthropic import ChatAnthropic
 from langchain_openai import ChatOpenAI
 from tool_select import *
-from node_utils import *
+from utils.node_utils import *
 import time
 
 load_dotenv()
@@ -95,7 +95,7 @@ def runPrompt(test_dict, llm_graph, llm, sys_prompt:str="", prompt_num:int=0, us
             try:
                 print(f"System Prompt {prompt_num}")
                 print(f"{i} User: " + user_input)
-                if llm == 'claude':
+                if 'claude' in llm:
                     events = stream_claude_graph_updates(llm_graph, user_input, sys_prompt)
                 else:
                     events = stream_gpt_graph_updates(llm_graph, user_input, sys_prompt)
@@ -167,7 +167,7 @@ def runPromptWithRouting(test_dict, llm, sys_prompt:str="", prompt_num:int=0, to
                     if name.split("_")[0] not in sourceSet and name.split("_")[0] in tool_dict:
                         tools += tool_dict[name.split("_")[0]]
                         sourceSet.add(name.split("_")[0])
-                if llm == 'claude':
+                if 'claude' in llm:
                     claude_llm = ChatAnthropic(model_name="claude-3-5-sonnet-20240620", timeout=None, stop=None)
                     claude_graph = createGraph(claude_llm, tools)
                     events = stream_claude_graph_updates(claude_graph, user_input, sys_prompt)
