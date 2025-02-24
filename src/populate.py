@@ -14,15 +14,15 @@ sys_prompt_0 = '''
 '''
 # o3_llm = ChatOpenAI(model="o3-mini")
 # o3_graph = createGraph(o3_llm, tools)
-# runPrompt(test_dict, o3_graph, "o3-gpt", sys_prompt_0, 0, "llm")
-#
-# gpt_llm = ChatOpenAI(model="gpt-4o")
-# gpt_graph = createGraph(o3_llm, tools)
-# runPrompt(test_dict, gpt_graph, "gpt-4o", sys_prompt_0, 0, "llm")
+# runPrompt(test_dict, o3_graph, "o3-gpt", sys_prompt_0, 0, "upd-llm")
 
+# gpt_llm = ChatOpenAI(model="gpt-4o")
+# gpt_graph = createGraph(gpt_llm, tools)
+# runPrompt(test_dict, gpt_graph, "gpt-4o", sys_prompt_0, 0, "upd-llm")
+#
 # claude_llm = ChatAnthropic(model_name="claude-3-5-sonnet-20240620", timeout=None, stop=None)
 # claude_graph = createGraph(claude_llm, tools)
-# runPrompt(test_dict, claude_graph, "claude", sys_prompt_0, 0, "llm")
+# runPrompt(test_dict, claude_graph, "claude", sys_prompt_0, 0, "upd-llm")
 
 #System Prompt
 # sys_prompt_1 = '''
@@ -56,7 +56,7 @@ sys_prompt_0 = '''
 # runPrompt(test_dict, gpt_graph, "gpt-4o", sys_prompt_2, 2, "sys_prompt")
 #
 # #Routing
-runPromptWithRouting(test_dict, "gpt-4o", sys_prompt_0, 0, getToolsDict(getTools()), "num_tools")
+runPromptWithRouting(test_dict, "claude", sys_prompt_0, 0, getToolsDict(getTools()), "num_tools")
 #
 # #Enhanced Descriptions
 # gpt_llm = ChatOpenAI(model="gpt-4o")
